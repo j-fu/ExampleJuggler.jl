@@ -2,3 +2,7 @@ name = "ExampleJuggler"
 uuid = "3bbe58f8-ed81-4c4e-a134-03e85fcf4a1a"
 authors = ["Jürgen Fuhrmann <juergen-fuhrmann@web.de>"]
 version = "0.1.0"
+
+[deps]
+DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
+Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"

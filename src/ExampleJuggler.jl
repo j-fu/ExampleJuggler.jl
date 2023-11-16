@@ -1,5 +1,12 @@
 module ExampleJuggler
 
-greet() = print("Hello World!")
+import Literate
+using DocStringExtensions: SIGNATURES
 
-end # module ExampleJuggler
+include("mock.jl")
+export mock_x, mock_xt
+
+include("literate.jl")
+export literate
+
+end
