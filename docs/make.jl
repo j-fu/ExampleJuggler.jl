@@ -7,12 +7,12 @@ function mkdocs()
 
     literate_examples = literate(example_sources;
                                  info = true,
+                                 with_plots = true,
                                  Plotter = CairoMakie)
 
     makedocs(; sitename = "ExampleJuggler.jl",
              modules = [ExampleJuggler],
              clean = false,
-             warnonly = true,
              doctest = true,
              authors = "J. Fuhrmann",
              repo = "https://github.com/j-fu/ExampleJuggler.jl",
@@ -21,6 +21,7 @@ function mkdocs()
                  "api.md",
                  "mock.md",
                  "Literate" => literate_examples,
+                 "internal.md",
              ])
     if !isinteractive()
         deploydocs(; repo = "github.com/j-fu/ExampleJuggler.jl.git", devbranch = "main")

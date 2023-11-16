@@ -1,6 +1,9 @@
-#
-# Replace SOURCE_URL marker with github url of source
-#
+"""
+$(SIGNATURES)
+
+Replace SOURCE_URL marker with url of source.
+Used for preprocessing the input of `Literate.markdown` in [`ExampleJuggler.literate`](@ref).
+"""
 function replace_source_url(input, source_url)
     lines_in = collect(eachline(IOBuffer(input)))
     lines_out = IOBuffer()
@@ -12,9 +15,10 @@ end
 
 """
          literate(example_sources;
+                  with_plots = false,
                   Plotter = nothing,
                   example_subdir = "literate_examples",
-                  source_prefix="https://github.com/j-fu/ExampleJuggler.jl/raw/master/examples"
+                  source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples",
                   info = false,
                   clean = true)
 
@@ -22,6 +26,7 @@ Generate markdown files for use with documenter from list of Julia code examples
 See [ExampleLiterate.jl](@ref) for an example.
 """
 function literate(example_sources;
+                  with_plots = false,
                   Plotter = nothing,
                   example_subdir = "literate_examples",
                   source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples",
@@ -47,7 +52,7 @@ function literate(example_sources;
                               info,
                               preprocess = buffer -> replace_source_url(buffer, source_url))
 
-            if !isnothing(Plotter)
+            if with_plots
                 example_module = include(example_source)
                 if isdefined(example_module, :genplots)
                     if info
