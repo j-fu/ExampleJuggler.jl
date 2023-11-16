@@ -2,13 +2,13 @@
 $(SIGNATURES)
 
 Replace SOURCE_URL marker with url of source.
-Used for preprocessing the input of `Literate.markdown` in [`ExampleJuggler.literate`](@ref).
+Used for preprocessing the input of `Literate.markdown` in [`ExampleJuggler.docliterate`](@ref).
 """
 function replace_source_url(input, source_url)
     lines_in = collect(eachline(IOBuffer(input)))
     lines_out = IOBuffer()
     for line in lines_in
-        println(lines_out, replace(line, "SOURCE_URL" => source_url))
+        println(lines_out, replace(line, "@__SOURCE_URL__" => source_url))
     end
     return String(take!(lines_out))
 end
@@ -25,13 +25,13 @@ end
 Generate markdown files for use with documenter from list of Julia code examples.
 See [ExampleLiterate.jl](@ref) for an example.
 """
-function literate(example_sources;
-                  with_plots = false,
-                  Plotter = nothing,
-                  example_subdir = "literate_examples",
-                  source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples",
-                  info = false,
-                  clean = true)
+function docliterate(example_sources;
+                     with_plots = false,
+                     Plotter = nothing,
+                     example_subdir = "literate_examples",
+                     source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples",
+                     info = false,
+                     clean = true)
     if basename(pwd()) == "docs" # run from docs subdirectory, e.g, during developkment
         example_md_dir = joinpath("src", example_subdir)
     else # standard case with ci
@@ -69,4 +69,26 @@ function literate(example_sources;
     joinpath.(example_subdir, filter(fname -> splitext(fname)[end] == ".md", readdir(example_md_dir)))
 end
 
-literate(example_source::String; kwargs...) = literate([example_source]; kwargs...)
+docliterate(example_source::String; kwargs...) = literate([example_source]; kwargs...)
+
+"""
+    testliterate(example_sources;
+                 info = false,
+                 with_timing = false)
+
+Test the literate files by calling the the `test()` method of the module.
+"""
+function testliterate(example_sources;
+                      info = false,
+                      with_timing = false)
+    for example_source in example_sources
+        if info
+            @info "testing $(example_source)"
+        end
+        example_module = include(example_source)
+        @test Base.invokelatest(example_module.test)
+        if with_timing
+            @time Base.invokelatest(example_module.test)
+        end
+    end
+end

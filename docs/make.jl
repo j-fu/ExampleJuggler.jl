@@ -5,10 +5,10 @@ function mkdocs()
 
     example_sources = [joinpath(@__DIR__, "..", "examples", "ExampleLiterate.jl")]
 
-    literate_examples = literate(example_sources;
-                                 info = true,
-                                 with_plots = true,
-                                 Plotter = CairoMakie)
+    literate_examples = docliterate(example_sources;
+                                    info = true,
+                                    with_plots = true,
+                                    Plotter = CairoMakie)
 
     makedocs(; sitename = "ExampleJuggler.jl",
              modules = [ExampleJuggler],
