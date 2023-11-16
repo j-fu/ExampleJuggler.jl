@@ -14,13 +14,13 @@ function replace_source_url(input, source_url)
 end
 
 """
-         literate(example_sources;
-                  with_plots = false,
-                  Plotter = nothing,
-                  example_subdir = "literate_examples",
-                  source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples",
-                  info = false,
-                  clean = true)
+         docliterate(example_sources;
+                     with_plots = false,
+                     Plotter = nothing,
+                     example_subdir = "literate_examples",
+                     source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples",
+                     info = false,
+                     clean = true)
 
 Generate markdown files for use with documenter from list of Julia code examples.
 See [ExampleLiterate.jl](@ref) for an example.
