@@ -39,22 +39,23 @@ function main(; Plotter = nothing)
     maximum(fx), maximum(fxt)
 end
 
-function genplots(dir; Plotter = nothing)
-    if ismakie(Plotter)
-        Plotter.activate!(; type = "svg", visible = false)
-        x, fx = mock_x()
-        p = Plotter.lines(x, fx)
-        Plotter.save(joinpath(dir, "mock_x.svg"), p)
-        x, t, fxt = mock_xt()
-        p = Plotter.heatmap(x, t, fxt)
-        Plotter.save(joinpath(dir, "mock_xt.svg"), p)
-    end
-    nothing
-end
-
-function test()
-    maxfx, maxfxt = main()
-    isapprox(maxfx, 1.0; rtol = 1.0e-3) && isapprox(maxfxt, 1.0; rtol = 1.0e-3)
-end
+function genplots(dir; Plotter = nothing)                    #hide
+    if ismakie(Plotter)                                      #hide
+        Plotter.activate!(; type = "svg", visible = false)   #hide
+        x, fx = mock_x()                                     #hide
+        p = Plotter.lines(x, fx)                             #hide
+        Plotter.save(joinpath(dir, "mock_x.svg"), p)         #hide
+        x, t, fxt = mock_xt()                                #hide
+        p = Plotter.heatmap(x, t, fxt)                       #hide
+        Plotter.save(joinpath(dir, "mock_xt.svg"), p)        #hide
+    end                                                      #hide
+    nothing                                                  #hide
+end                                                          #hide
+#hide
+function test()                                              #hide
+    maxfx, maxfxt = main()                                   #hide
+    isapprox(maxfx, 1.0; rtol = 1.0e-3) &&                   #hide
+        isapprox(maxfxt, 1.0; rtol = 1.0e-3)                 #hide
+end                                                          #hide
 
 end
