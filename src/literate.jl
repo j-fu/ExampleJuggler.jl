@@ -24,10 +24,14 @@ See [ExampleLiterate.jl](@ref) for an example.
 function literate(example_sources;
                   Plotter = nothing,
                   example_subdir = "literate_examples",
-                  source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/raw/master/examples",
+                  source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples",
                   info = false,
                   clean = true)
-    example_md_dir = joinpath("src", example_subdir)
+    if basename(pwd()) == "docs" # run from docs subdirectory, e.g, during developkment
+        example_md_dir = joinpath("src", example_subdir)
+    else # standard case with ci
+        example_md_dir = joinpath("docs", "src", example_subdir)
+    end
     if clean
         rm(example_md_dir; recursive = true, force = true)
         if info
