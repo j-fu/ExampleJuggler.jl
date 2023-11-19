@@ -2,12 +2,15 @@ using Test
 using ExampleJuggler
 
 ExampleJuggler.verbose!(true)
-@info ExampleJuggler.verbose()
 
 example_sources = joinpath.(@__DIR__, "..", "examples", ["ExampleLiterate.jl"])
-example_notebooks = joinpath.(@__DIR__, "..", "notebooks", ["PlutoTemplate.jl", "ExamplePluto.jl"])
+example_notebooks = joinpath.(@__DIR__, "..", "examples", ["PlutoTemplate.jl", "ExamplePluto.jl"])
 example_scripts = joinpath.(@__DIR__, "..", "examples", ["testscript.jl", "PlutoTemplate.jl", "ExamplePluto.jl"])
 plutoenv = joinpath(@__DIR__, "..", "examples", "plutoenv")
+
+@testset "pluto notebooks" begin
+    testplutonotebooks(example_notebooks; plutoenv)
+end
 
 @testset "literate examples" begin
     @testmodules(example_sources, a=2)

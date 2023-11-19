@@ -13,6 +13,8 @@ docliterate
 
 ## Testing
 ```@docs
+testplutonotebook
+testplutonotebooks
 @testmodule
 @testmodules
 @testscript

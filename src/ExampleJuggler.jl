@@ -28,4 +28,7 @@ export @testscript, @testscripts
 export @testmodule, @testmodules
 export @plotmodule, @plotmodules
 
+include("pluto.jl")
+export testplutonotebook, testplutonotebooks
+
 end
