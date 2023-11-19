@@ -13,82 +13,47 @@ function replace_source_url(input, source_url)
     return String(take!(lines_out))
 end
 
+const example_subdir = "literate_examples"
+
+function cleanliterate()
+    md_dir = example_md_dir()
+    if verbose()
+        @info "removing $(md_dir)"
+    end
+    rm(md_dir; recursive = true, force = true)
+end
+
+function example_md_dir()
+    if basename(pwd()) == "docs" # run from docs subdirectory, e.g, during developkment
+        return joinpath("src", example_subdir)
+    else # standard case with ci
+        return joinpath("docs", "src", example_subdir)
+    end
+end
+
 """
          docliterate(example_sources;
-                     with_plots = false,
-                     Plotter = nothing,
-                     example_subdir = "literate_examples",
-                     source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples",
-                     info = false,
-                     clean = true)
+                     source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples")
 
 Generate markdown files for use with documenter from list of Julia code examples.
 See [ExampleLiterate.jl](@ref) for an example.
 """
 function docliterate(example_sources;
-                     with_plots = false,
-                     Plotter = nothing,
-                     example_subdir = "literate_examples",
-                     source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples",
-                     info = false,
-                     clean = true)
-    if basename(pwd()) == "docs" # run from docs subdirectory, e.g, during developkment
-        example_md_dir = joinpath("src", example_subdir)
-    else # standard case with ci
-        example_md_dir = joinpath("docs", "src", example_subdir)
-    end
-    if clean
-        rm(example_md_dir; recursive = true, force = true)
-        if info
-            @info "removed $(example_md_dir)"
-        end
-    end
+                     source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples")
+    md_dir = example_md_dir()
     for example_source in example_sources
         example_base, ext = splitext(example_source)
         if ext == ".jl"
             source_url = source_prefix * "/" * basename(example_source)
             Literate.markdown(example_source,
-                              example_md_dir;
-                              info,
+                              md_dir;
+                              info = verbose(),
                               preprocess = buffer -> replace_source_url(buffer, source_url))
-
-            if with_plots
-                example_module = include(example_source)
-                if isdefined(example_module, :genplots)
-                    if info
-                        @info "generating plots from $(example_source)"
-                    end
-                    # see https://docs.julialang.org/en/v1/manual/methods/#Redefining-Methods
-                    Base.invokelatest(example_module.genplots, example_md_dir; Plotter)
-                end
-            end
         else
-            @warn "$(example_source) is not a Julia file, skipping"
+            @warn "$(example_source) appears to be not a Julia file, skipping"
         end
     end
-    joinpath.(example_subdir, filter(fname -> splitext(fname)[end] == ".md", readdir(example_md_dir)))
+    joinpath.(example_subdir, filter(fname -> splitext(fname)[end] == ".md", readdir(md_dir)))
 end
 
 docliterate(example_source::String; kwargs...) = literate([example_source]; kwargs...)
-
-"""
-    testliterate(example_sources;
-                 info = false,
-                 with_timing = false)
-
-Test the literate files by calling the the `test()` method of the module.
-"""
-function testliterate(example_sources;
-                      info = false,
-                      with_timing = false)
-    for example_source in example_sources
-        if info
-            @info "testing $(example_source)"
-        end
-        example_module = include(example_source)
-        @test Base.invokelatest(example_module.test)
-        if with_timing
-            @time Base.invokelatest(example_module.test)
-        end
-    end
-end
