@@ -1,5 +1,5 @@
 function docpluto(notebooks;
-                  source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples",
+                  source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples",
                   iframe_height = "500px",
                   plutoenv = Base.active_project())
     if plutoenv != nothing

@@ -15,13 +15,13 @@ end
 
 """
          docmodules(example_sources;
-                     source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples")
+                     source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples")
 
 Generate markdown files for use with documenter from list of Julia code examples.
 See [ExampleLiterate.jl](@ref) for an example.
 """
 function docmodules(example_sources;
-                    source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples")
+                    source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples")
     md_dir = example_md_dir(module_examples)
     example_md = String[]
     for example_source in example_sources
