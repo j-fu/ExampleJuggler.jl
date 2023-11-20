@@ -6,6 +6,6 @@ using AbstractTrees, Test
 x = 1
 @test x == 1
 function runtests(; kwargs...)
-    println("ttt")
+    println("runtests from  testscript")
     @test x == 1
 end
