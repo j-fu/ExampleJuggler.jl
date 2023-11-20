@@ -18,14 +18,14 @@ randmod() = "mod" * string(uuid1())[1:8]
 parsescript(source) = Meta.parse("module " * ExampleJuggler.randmod() * "\n\n" * read(source, String) * "\n\nend")
 
 """
-    @testscripts(scripts)
+    @testscripts(example_dir, scripts)
     
 Run scripts in the context of the calling module via [`@testscript`](@ref)
 """
-macro testscripts(sources, kwargs...)
+macro testscripts(example_dir, sources, kwargs...)
     esc(quote
             for source in $(sources)
-                ExampleJuggler.@testscript(source, $(kwargs...))
+                ExampleJuggler.@testscript(joinpath(example_dir, source), $(kwargs...))
             end
         end)
 end

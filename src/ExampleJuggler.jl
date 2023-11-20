@@ -16,20 +16,15 @@ include("mock.jl")
 export mock_x, mock_xt
 
 include("modules.jl")
-export docmodule, docmodules
-export @testmodule, @testmodules
-export @plotmodule, @plotmodules
+export @docmodules, @testmodules
 
 include("scripts.jl")
-export @testscript, @testscripts
+export @testscripts
 
 include("pluto.jl")
-export testplutonotebooks, @testplutonotebooks
+export testplutonotebooks, @testplutonotebooks, docplutonotebooks, @docplutonotebooks
 
 include("plutostatichtml.jl")
-export docplutostatichtml
-
 include("plutosliderserver.jl")
-export docpluto
 
 end

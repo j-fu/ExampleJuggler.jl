@@ -55,7 +55,7 @@ function genplots(dir; Plotter = nothing)                    #hide
 end                                                          #hide
 #hide
 function runtests(; a = 1)                                              #hide
-    @info a
+    @info a                                                  #hide
     maxfx, maxfxt = main()                                   #hide
     @test isapprox(maxfx, 1.0; rtol = 1.0e-3)                #hide
     @test isapprox(maxfxt, 1.0; rtol = 1.0e-3)               #hide

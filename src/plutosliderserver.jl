@@ -1,18 +1,23 @@
-function docpluto(notebooks;
-                  source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples",
-                  iframe_height = "500px",
-                  plutoenv = Base.active_project())
-    if plutoenv != nothing
-        Pkg.activate(plutoenv)
-        ENV["PLUTO_PROJECT"] = plutoenv
+"""
+    docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height)
+
+Document notebooks via plutosliderserver.
+"""
+function docplutosliderserver(example_dir, notebooks;
+                              source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples",
+                              iframe_height = "500px",
+                              pluto_project = Base.active_project())
+    if pluto_project != nothing
+        Pkg.activate(pluto_project)
+        ENV["PLUTO_PROJECT"] = pluto_project
     end
 
     Export_output_dir = joinpath(example_md_dir(pluto_examples), "..", "..", "build", pluto_examples)
     if verbose()
         @info "notebook output to $(normpath(Export_output_dir))"
     end
-    export_directory(dirname(notebooks[1]);
-                     notebook_paths = basename.(notebooks),
+    export_directory(example_dir;
+                     notebook_paths = notebooks,
                      Export_output_dir,
                      Export_offer_binder = false)
     example_md = String[]

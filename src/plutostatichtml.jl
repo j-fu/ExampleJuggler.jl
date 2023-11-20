@@ -1,17 +1,19 @@
-function docplutostatichtml(notebooks; plutoenv = nothing)
+"""
+    docplutostatichtml(example_dir, notebooks; pluto_project)
+
+Document notebooks via plutostatichtml.
+"""
+function docplutostatichtml(example_dir, notebooks; pluto_project = Base.active_project())
     project = Base.active_project()
-    if plutoenv != nothing
-        @info normpath(plutoenv)
-        Pkg.activate(normpath(plutoenv))
-        ENV["PLUTO_PROJECT"] = normpath(plutoenv)
-        Pkg.status()
+    if pluto_project != nothing
+        Pkg.activate(pluto_project)
+        ENV["PLUTO_PROJECT"] = pluto_project
     end
-    notebookdir = dirname(notebooks[1])
-    notebookjl = basename.(notebooks)
-    notebookmd = [split(notebook, ".")[1] * ".md" for notebook in notebookjl]
+
+    notebookmd = [splitext(notebook)[1] * ".md" for notebook in notebooks]
 
     oopts = OutputOptions(; append_build_context = true)
-    bopts = BuildOptions(notebookdir; output_format = documenter_output)
+    bopts = BuildOptions(example_dir; output_format = documenter_output)
     session = Pluto.ServerSession()
     session.options.server.disable_writing_notebook_files = true
     session.options.server.show_file_system = false
@@ -20,9 +22,9 @@ function docplutostatichtml(notebooks; plutoenv = nothing)
     # session.options.evaluation.capture_stdout = false
     #    session.options.evaluation.workspace_use_distributed = false # this makes it fast
 
-    build_notebooks(bopts, notebookjl, oopts; session)
+    build_notebooks(bopts, notebooks, oopts; session)
     for nb in notebookmd
-        mv(joinpath(notebookdir, nb), joinpath(example_md_dir(plutostatichtml_examples), nb))
+        mv(joinpath(example_dir, nb), joinpath(example_md_dir(plutostatichtml_examples), nb))
     end
     Pkg.activate(project)
     joinpath.(plutostatichtml_examples, notebookmd)

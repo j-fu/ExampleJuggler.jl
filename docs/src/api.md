@@ -6,18 +6,16 @@
 
 ## Documentation
 ```@docs
-docmodules
-@plotmodule
-@plotmodules
+@docmodules
+docplutonotebooks
+@docplutonotebooks
 ```
 
 ## Testing
 ```@docs
 testplutonotebooks
-@testlutonotebooks
-@testmodule
+@testplutonotebooks
 @testmodules
-@testscript
 @testscripts
 ```
 
