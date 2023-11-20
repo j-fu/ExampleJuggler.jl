@@ -13,8 +13,8 @@ docmodules
 
 ## Testing
 ```@docs
-testplutonotebook
 testplutonotebooks
+@testlutonotebooks
 @testmodule
 @testmodules
 @testscript

@@ -15,16 +15,16 @@ include("common.jl")
 include("mock.jl")
 export mock_x, mock_xt
 
-include("literate.jl")
+include("modules.jl")
 export docmodule, docmodules
-
-include("macros.jl")
-export @testscript, @testscripts
 export @testmodule, @testmodules
 export @plotmodule, @plotmodules
 
+include("scripts.jl")
+export @testscript, @testscripts
+
 include("pluto.jl")
-export testplutonotebook, testplutonotebooks
+export testplutonotebooks, @testplutonotebooks
 
 include("plutostatichtml.jl")
 export docplutostatichtml

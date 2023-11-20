@@ -41,3 +41,57 @@ function docmodules(example_sources;
 end
 
 docmodule(example_source::String; kwargs...) = documodules([example_source]; kwargs...)
+
+"""
+    testmodule(module, kwargs...)
+
+Include script defining a module in the context of the calling module and call the `runtests` method
+if it is defined in this module, passing `kwargs...`.
+"""
+macro testmodule(source, kwargs...)
+    esc(:(mod = include($source);
+          if isdefined(mod, :runtests)
+              ExampleJuggler.verbose() && @info "calling runtests() from " * normpath($(source))
+              invokelatest(getproperty(mod, :runtests); $(kwargs...))
+          end))
+end
+
+"""
+    @testmodules(modules, kwargs...)
+
+Test several scripts defining modules via [`@testmodule`](@ref).
+"""
+macro testmodules(sources, kwargs...)
+    esc(quote
+            for source in $(sources)
+                ExampleJuggler.@testmodule(source, $(kwargs...))
+            end
+        end)
+end
+
+"""
+    @plotmodule(modules, kwargs...)
+
+Include module into context of calling module and execute `genplots(;kwargs...)` if it exists.
+"""
+macro plotmodule(source, kwargs...)
+    esc(:(mod = include($source);
+          if isdefined(mod, :genplots)
+              ExampleJuggler.verbose() && @info "generating plots for " * normpath($(source))
+              invokelatest(getproperty(mod, :genplots), ExampleJuggler.example_md_dir(ExampleJuggler.module_examples);
+                           $(kwargs...))
+          end))
+end
+
+"""
+    @plotmodules(modules, kwargs...)
+
+Plot several scripts defining modules via [`@plotmodule`](@ref).
+"""
+macro plotmodules(sources, kwargs...)
+    esc(quote
+            for source in $(sources)
+                ExampleJuggler.@plotmodule(source, $(kwargs...))
+            end
+        end)
+end
