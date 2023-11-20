@@ -16,7 +16,7 @@ function verbose!(v::Bool)
     verbosity = v
 end
 
-const example_subdir = "examples"
+const example_subdir = "_examples"
 
 function cleanexamples()
     md_dir = example_md_dir()
@@ -25,6 +25,7 @@ function cleanexamples()
     end
     rm(md_dir; recursive = true, force = true)
 end
+export cleanexamples
 
 function example_md_dir()
     if basename(pwd()) == "docs" # run from docs subdirectory, e.g, during developkment

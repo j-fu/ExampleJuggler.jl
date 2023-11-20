@@ -25,7 +25,7 @@ function mkdocs()
                  "internal.md",
              ])
 
-    cleanliterate()
+    cleanexamples()
 
     if !isinteractive()
         deploydocs(; repo = "github.com/j-fu/ExampleJuggler.jl.git", devbranch = "main")
