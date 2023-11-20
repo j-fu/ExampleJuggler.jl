@@ -6,7 +6,7 @@
 
 ## Documentation
 ```@docs
-docliterate
+docmodules
 @plotmodule
 @plotmodules
 ```

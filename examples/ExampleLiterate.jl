@@ -4,7 +4,7 @@
 ([source code](@__SOURCE_URL__))
 
 This example can be used for documentation generation with [Literate.jl](https://github.com/fredrikekre/Literate.jl)
-via the [`ExampleJuggler.docliterate`](@ref) method.
+via the [`ExampleJuggler.docmodules`](@ref) method.
 
 ![](mock_x.svg)
 
