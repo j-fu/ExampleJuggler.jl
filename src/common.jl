@@ -21,6 +21,6 @@ function example_md_dir(subdir)
     if basename(pwd()) == "docs" # run from docs subdirectory, e.g, during developkment
         return mkpath(joinpath("src", example_subdir, subdir))
     else # standard case with ci
-        return mkpath(joinpath("docs", "src", example_subdir), subdir)
+        return mkpath(joinpath("docs", "src", example_subdir, subdir))
     end
 end
