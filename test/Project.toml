@@ -1,2 +1,12 @@
 [deps]
+AbstractTrees = "1520ce14-60c1-5f80-bbc7-55ef81b5835c"
+CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+Markdown = "d6f4376e-aef5-505a-96c1-9c027394607a"
+Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+PkgDependency = "9eb5382b-762c-48ca-8139-e736883fe800"
+Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[compat]
+CairoMakie = "0.10.12"

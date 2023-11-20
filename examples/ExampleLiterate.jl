@@ -16,7 +16,9 @@ module ExampleLiterate
 ismakie(Plotter::Any) = false
 ismakie(Plotter::Module) = isdefined(Plotter, :Makie)
 
+using PkgDependency
 using ExampleJuggler
+using Test
 
 function main(; Plotter = nothing)
     x, fx = mock_x()
@@ -52,10 +54,11 @@ function genplots(dir; Plotter = nothing)                    #hide
     nothing                                                  #hide
 end                                                          #hide
 #hide
-function test()                                              #hide
+function runtests(; a = 1)                                              #hide
+    @info a
     maxfx, maxfxt = main()                                   #hide
-    isapprox(maxfx, 1.0; rtol = 1.0e-3) &&                   #hide
-        isapprox(maxfxt, 1.0; rtol = 1.0e-3)                 #hide
+    @test isapprox(maxfx, 1.0; rtol = 1.0e-3)                #hide
+    @test isapprox(maxfxt, 1.0; rtol = 1.0e-3)               #hide
 end                                                          #hide
 
 end

@@ -1,14 +1,15 @@
 using Documenter, ExampleJuggler, CairoMakie
 
+ExampleJuggler.verbose!(true)
+
 function mkdocs()
     DocMeta.setdocmeta!(ExampleJuggler, :DocTestSetup, :(using ExampleJuggler); recursive = true)
 
     example_sources = [joinpath(@__DIR__, "..", "examples", "ExampleLiterate.jl")]
 
-    literate_examples = docliterate(example_sources;
-                                    info = true,
-                                    with_plots = true,
-                                    Plotter = CairoMakie)
+    literate_examples = docliterate(example_sources)
+
+    @plotmodules(example_sources, Plotter=CairoMakie)
 
     makedocs(; sitename = "ExampleJuggler.jl",
              modules = [ExampleJuggler],
@@ -23,6 +24,9 @@ function mkdocs()
                  "Literate" => literate_examples,
                  "internal.md",
              ])
+
+    cleanexamples()
+
     if !isinteractive()
         deploydocs(; repo = "github.com/j-fu/ExampleJuggler.jl.git", devbranch = "main")
     end
