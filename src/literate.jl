@@ -22,7 +22,7 @@ See [ExampleLiterate.jl](@ref) for an example.
 """
 function docmodules(example_sources;
                     source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples")
-    md_dir = example_md_dir("modules")
+    md_dir = example_md_dir(module_examples)
     example_md = String[]
     for example_source in example_sources
         example_base, ext = splitext(example_source)
@@ -35,7 +35,7 @@ function docmodules(example_sources;
         else
             @warn "$(example_source) appears to be not a Julia file, skipping"
         end
-        push!(example_md, joinpath(example_subdir, "modules", splitext(basename(example_source))[1] * ".md"))
+        push!(example_md, joinpath(module_examples, splitext(basename(example_source))[1] * ".md"))
     end
     example_md
 end

@@ -22,8 +22,8 @@ function docplutostatichtml(notebooks; plutoenv = nothing)
 
     build_notebooks(bopts, notebookjl, oopts; session)
     for nb in notebookmd
-        mv(joinpath(notebookdir, nb), joinpath(example_md_dir("plutostatichtml"), nb))
+        mv(joinpath(notebookdir, nb), joinpath(example_md_dir(plutostatichtml_examples), nb))
     end
     Pkg.activate(project)
-    joinpath.(example_subdir, "plutostatichtml", notebookmd)
+    joinpath.(plutostatichtml_examples, notebookmd)
 end

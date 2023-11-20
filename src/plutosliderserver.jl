@@ -7,7 +7,7 @@ function docpluto(notebooks;
         ENV["PLUTO_PROJECT"] = plutoenv
     end
 
-    Export_output_dir = joinpath(example_md_dir("pluto"), "..", "..", "..", "build", example_subdir, "pluto")
+    Export_output_dir = joinpath(example_md_dir(pluto_examples), "..", "..", "build", pluto_examples)
     if verbose()
         @info "notebook output to $(normpath(Export_output_dir))"
     end
@@ -30,10 +30,10 @@ function docpluto(notebooks;
 """
         # <iframe sandbox="allow-same-origin" onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';" width="100%" src="../$(base).html"> </iframe>
         mdname = base * ".md"
-        io = open(joinpath(example_md_dir("pluto"), base * ".md"), "w")
+        io = open(joinpath(example_md_dir(pluto_examples), base * ".md"), "w")
         write(io, mdstring)
         close(io)
-        push!(example_md, joinpath(example_subdir, "pluto", base * ".md"))
+        push!(example_md, joinpath(pluto_examples, base * ".md"))
     end
     example_md
 end

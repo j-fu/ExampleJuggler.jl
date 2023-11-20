@@ -66,7 +66,8 @@ macro plotmodule(source, kwargs...)
     esc(:(mod = include($source);
           if isdefined(mod, :genplots)
               ExampleJuggler.verbose() && @info "generating plots for " * normpath($(source))
-              invokelatest(getproperty(mod, :genplots), ExampleJuggler.example_md_dir("modules"); $(kwargs...))
+              invokelatest(getproperty(mod, :genplots), ExampleJuggler.example_md_dir(ExampleJuggler.module_examples);
+                           $(kwargs...))
           end))
 end
 

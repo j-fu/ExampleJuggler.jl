@@ -6,21 +6,27 @@ function verbose!(v::Bool)
     verbosity = v
 end
 
-const example_subdir = "_examples"
+const module_examples = "module_examples"
+const pluto_examples = "pluto_examples"
+const plutostatichtml_examples = "plutostatichtml_examples"
+const all_examples = [module_examples, pluto_examples, plutostatichtml_examples]
 
 function cleanexamples()
-    md_dir = normpath(joinpath(example_md_dir("nothing"), ".."))
-    if verbose()
-        @info "removing $(md_dir)"
+    for examples in all_examples
+        md_dir = example_md_dir(examples)
+        if verbose()
+            @info "removing $(md_dir)"
+        end
+        rm(md_dir; recursive = true, force = true)
     end
-    rm(md_dir; recursive = true, force = true)
 end
+
 export cleanexamples
 
 function example_md_dir(subdir)
     if basename(pwd()) == "docs" # run from docs subdirectory, e.g, during developkment
-        return mkpath(joinpath("src", example_subdir, subdir))
+        return mkpath(joinpath("src", subdir))
     else # standard case with ci
-        return mkpath(joinpath("docs", "src", example_subdir, subdir))
+        return mkpath(joinpath("docs", "src", subdir))
     end
 end
