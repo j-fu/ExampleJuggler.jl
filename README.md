@@ -4,6 +4,8 @@
 
 # ExampleJuggler.jl
 
+This package is still in alpha status.
+
 Following the [DRY mantra](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself), provide tools for handling
 code examples in  various Julia packages.
 
