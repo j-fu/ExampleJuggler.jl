@@ -2,6 +2,7 @@ module ExampleJuggler
 import Literate
 import Pkg
 import Pluto
+using PlutoStaticHTML: OutputOptions, documenter_output, BuildOptions, build_notebooks
 using Test: @test
 using DocStringExtensions: SIGNATURES
 using UUIDs: uuid1
@@ -13,6 +14,24 @@ verbose() = verbosity
 function verbose!(v::Bool)
     global verbosity
     verbosity = v
+end
+
+const example_subdir = "examples"
+
+function cleanexamples()
+    md_dir = example_md_dir()
+    if verbose()
+        @info "removing $(md_dir)"
+    end
+    rm(md_dir; recursive = true, force = true)
+end
+
+function example_md_dir()
+    if basename(pwd()) == "docs" # run from docs subdirectory, e.g, during developkment
+        return mkpath(joinpath("src", example_subdir))
+    else # standard case with ci
+        return mkpath(joinpath("docs", "src", example_subdir))
+    end
 end
 
 @compat public verbose!
@@ -30,5 +49,8 @@ export @plotmodule, @plotmodules
 
 include("pluto.jl")
 export testplutonotebook, testplutonotebooks
+
+include("plutostatichtml.jl")
+export docplutostatichtml
 
 end

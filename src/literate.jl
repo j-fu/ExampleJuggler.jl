@@ -13,24 +13,6 @@ function replace_source_url(input, source_url)
     return String(take!(lines_out))
 end
 
-const example_subdir = "literate_examples"
-
-function cleanliterate()
-    md_dir = example_md_dir()
-    if verbose()
-        @info "removing $(md_dir)"
-    end
-    rm(md_dir; recursive = true, force = true)
-end
-
-function example_md_dir()
-    if basename(pwd()) == "docs" # run from docs subdirectory, e.g, during developkment
-        return joinpath("src", example_subdir)
-    else # standard case with ci
-        return joinpath("docs", "src", example_subdir)
-    end
-end
-
 """
          docliterate(example_sources;
                      source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blobs/main/examples")

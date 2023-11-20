@@ -17,5 +17,5 @@ end
 end
 
 @testset "scripts" begin
-    @testscripts(example_scripts, a=3)
+    @testscripts(example_scripts)
 end
