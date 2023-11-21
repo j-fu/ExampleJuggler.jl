@@ -41,7 +41,7 @@ function main(; Plotter = nothing)
     maximum(fx), maximum(fxt)
 end
 
-function genplots(dir; Plotter = nothing)                    #hide
+function generateplots(dir; Plotter = nothing)                    #hide
     if ismakie(Plotter)                                      #hide
         Plotter.activate!(; type = "svg", visible = false)   #hide
         x, fx = mock_x()                                     #hide

@@ -60,13 +60,13 @@ end
 """
     @plotmodule(modules, kwargs...)
 
-Include module into context of calling module and execute `genplots(;kwargs...)` if it exists.
+Include module into context of calling module and execute `generateplots(;kwargs...)` if it exists.
 """
 macro plotmodule(source, kwargs...)
     esc(:(mod = include($source);
-          if isdefined(mod, :genplots)
+          if isdefined(mod, :generateplots)
               ExampleJuggler.verbose() && @info "generating plots for " * normpath($(source))
-              invokelatest(getproperty(mod, :genplots), ExampleJuggler.example_md_dir(ExampleJuggler.module_examples);
+              invokelatest(getproperty(mod, :generateplots), ExampleJuggler.example_md_dir(ExampleJuggler.module_examples);
                            $(kwargs...))
           end))
 end
