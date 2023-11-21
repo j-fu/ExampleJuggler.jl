@@ -79,7 +79,7 @@ See [ExampleLiterate.jl](@ref) for an example. `kwargs` are passed to the `genpl
 of the corresponding module source.
 """
 macro docmodules(example_dir, modules, kwargs...)
-    esc(:(ExampleJuggler.@plotmodules(example_dir, modules, $(kwargs...)); docmodules(example_dir, modules)))
+    esc(:(ExampleJuggler.@plotmodules(example_dir, modules, $(kwargs...)); ExampleJuggler.docmodules(example_dir, modules)))
 end
 
 """
