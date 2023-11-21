@@ -30,3 +30,7 @@ function example_md_dir(subdir)
         return mkpath(joinpath("docs", "src", subdir))
     end
 end
+
+homogenize_entry(p::Pair) = p
+homogenize_entry(s::String) = Pair(splitext(basename(s))[1], s)
+homogenize_notebooklist(list = Vector{Union{String}, Pair{String, String}}) = homogenize_entry.(list)

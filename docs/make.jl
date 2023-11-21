@@ -5,32 +5,34 @@ ExampleJuggler.verbose!(true)
 function mkdocs()
     DocMeta.setdocmeta!(ExampleJuggler, :DocTestSetup, :(using ExampleJuggler); recursive = true)
 
-    example_modules = [joinpath(@__DIR__, "..", "examples", "ExampleLiterate.jl")]
-    example_notebooks = joinpath.(@__DIR__, "..", "examples", ["PlutoTemplate.jl", "ExamplePluto.jl"])
+    example_dir = joinpath(@__DIR__, "..", "examples")
+
+    modules = ["ExampleLiterate.jl"]
+
+    notebooks = ["PlutoTemplate.jl"
+                 "Example with Graphics" => "ExamplePluto.jl"]
 
     cleanexamples()
 
-    module_examples = docmodules(example_modules)
-    @plotmodules(example_modules, Plotter=CairoMakie)
-    plutostatichtml_examples = String[]
-    plutostatichtml_examples = docplutostatichtml(example_notebooks)
-    pluto_examples = docpluto(example_notebooks)
+    module_examples = @docmodules(example_dir, example_modules, Plotter=CairoMakie)
+    html_examples = @docplutonotebooks(example_dir, notebooks, iframe=false)
+    pluto_examples = @docplutonotebooks(example_dir, notebooks, iframe=true)
 
     makedocs(; sitename = "ExampleJuggler.jl",
              modules = [ExampleJuggler],
              clean = false,
              doctest = true,
-             format = Documenter.HTML(; size_threshold_ignore = plutostatichtml_examples,
+             format = Documenter.HTML(; size_threshold_ignore = last.(html_examples),
                                       mathengine = MathJax3()),
              authors = "J. Fuhrmann",
              repo = "https://github.com/j-fu/ExampleJuggler.jl",
              pages = [
                  "Home" => "index.md",
                  "api.md",
-                 "mock.md",
                  "Modules" => module_examples,
-                 "Notebooks1" => plutostatichtml_examples,
-                 "Notebooks2" => pluto_examples,
+                 "Notebooks" => html_examples,
+                 "Notebooks in iframe" => pluto_examples,
+                 "mock.md",
                  "internal.md",
              ])
 
