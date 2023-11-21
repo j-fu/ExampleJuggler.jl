@@ -1,10 +1,10 @@
 [![ci](https://github.com/j-fu/ExampleJuggler.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/j-fu/ExampleJuggler.jl/actions/workflows/ci.yml)
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://j-fu.github.io/ExampleJuggler.jl/stable)
 [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://j-fu.github.io/ExampleJuggler.jl/dev)
+[![stability-beta](https://img.shields.io/badge/stability-beta-33bbff.svg)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#beta)
 
 # ExampleJuggler.jl
 
-This package is still in alpha status.
 
 Following the [DRY mantra](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself), provide tools for handling
 code examples in  various Julia packages.
