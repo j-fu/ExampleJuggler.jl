@@ -24,10 +24,11 @@ function docplutosliderserver(example_dir, notebooks;
 
     for notebook in notebooks
         base = splitext(basename(notebook))[1]
+        cp(joinpath(example_dir, notebook), joinpath(example_md_dir(ExampleJuggler.pluto_examples), basename(notebook)))
         mdstring = """
 ##### [$(base).jl](@id $(base))
 
-[Download]($(source_prefix)/$(basename(notebook))) this [Pluto.jl](https://plutojl.org)  notebook.
+[Download]($(basename(notebook))) this [Pluto.jl](https://plutojl.org)  notebook.
 
 ```@raw html
 <iframe style="height:$(iframe_height)" width="100%" src="../$(base).html"> </iframe>
