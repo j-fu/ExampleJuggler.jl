@@ -34,9 +34,12 @@ Plot several scripts defining modules via [`@plotmodule`](@ref).
 """
 macro plotmodules(example_dir, modules, kwargs...)
     esc(quote
-            sources = last.(ExampleJuggler.homogenize_notebooklist($modules))
+            sources = last.(ExampleJuggler.homogenize_notebooklist($(modules)))
             for source in sources
-                ExampleJuggler.@plotmodule(joinpath($example_dir, source), $(kwargs...))
+                base, ext = splitext(source)
+                if ext == ".jl"
+                    ExampleJuggler.@plotmodule(joinpath($example_dir, source), $(kwargs...))
+                end
             end
         end)
 end
@@ -54,11 +57,12 @@ function docmodules(example_dir, modules; kwargs...)
     example_sources = joinpath.(example_dir, modules)
     example_md = String[]
     for example_source in example_sources
-        cp(example_source, joinpath(example_md_dir(ExampleJuggler.module_examples), basename(example_source)))
         example_base, ext = splitext(example_source)
         if ext == ".jl"
+            cp(example_source, joinpath(example_md_dir(ExampleJuggler.module_examples), basename(example_source)))
             Literate.markdown(example_source,
                               md_dir;
+                              documenter = false,
                               info = verbose(),
                               preprocess = buffer -> replace_source_url(buffer, basename(example_source)))
         else
@@ -76,8 +80,8 @@ Generate markdown files and plots for use with documenter from list of Julia mod
 Wrapper macro for [`docmodules`](@ref).
 """
 macro docmodules(example_dir, modules, kwargs...)
-    esc(:(ExampleJuggler.@plotmodules(example_dir, modules, $(kwargs...));
-          ExampleJuggler.docmodules(example_dir, modules;
+    esc(:(ExampleJuggler.@plotmodules($example_dir, $modules, $(kwargs...));
+          ExampleJuggler.docmodules($example_dir, $modules;
                                     $(kwargs...))))
 end
 

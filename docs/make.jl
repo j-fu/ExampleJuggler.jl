@@ -14,7 +14,7 @@ function mkdocs()
 
     cleanexamples()
 
-    module_examples = @docmodules(example_dir, example_modules, Plotter=CairoMakie)
+    module_examples = @docmodules(example_dir, modules, Plotter=CairoMakie)
     html_examples = @docplutonotebooks(example_dir, notebooks, iframe=false)
     pluto_examples = @docplutonotebooks(example_dir, notebooks, iframe=true)
 
