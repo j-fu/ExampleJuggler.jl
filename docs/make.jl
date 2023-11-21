@@ -7,7 +7,7 @@ function mkdocs()
 
     example_dir = joinpath(@__DIR__, "..", "examples")
 
-    modules = ["ExampleLiterate.jl"]
+    modules = ["ExampleModule.jl"]
 
     notebooks = ["PlutoTemplate.jl"
                  "Example with Graphics" => "ExamplePluto.jl"]

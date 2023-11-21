@@ -1,7 +1,7 @@
 """
     docplutostatichtml(example_dir, notebooks; pluto_project)
 
-Document notebooks via plutostatichtml.
+Document notebooks via  [PlutoStaticHTML.jl](https://github.com/rikhuijzer/PlutoStaticHTML.jl).
 """
 function docplutostatichtml(example_dir, notebooks; pluto_project = Base.active_project())
     project = Base.active_project()
