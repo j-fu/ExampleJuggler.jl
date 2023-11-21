@@ -10,7 +10,7 @@ macro testscript(source, kwargs...)
     esc(:(ExampleJuggler.verbose() && @info "testing " * basename($(source));
           mod = eval(ExampleJuggler.parsescript($(source)));
           if isdefined(mod, :runtests)
-              invokelatest(getproperty(mod, :runtests); $(kwargs...))
+              Base.invokelatest(getproperty(mod, :runtests); $(kwargs...))
           end))
 end
 

@@ -22,7 +22,7 @@ macro plotmodule(source, kwargs...)
     esc(:(mod = include($source);
           if isdefined(mod, :generateplots)
               ExampleJuggler.verbose() && @info "generating plots for " * normpath($(source))
-              invokelatest(getproperty(mod, :generateplots), ExampleJuggler.example_md_dir(ExampleJuggler.module_examples);
+              Base.invokelatest(getproperty(mod, :generateplots), ExampleJuggler.example_md_dir(ExampleJuggler.module_examples);
                            $(kwargs...))
           end))
 end
@@ -94,7 +94,7 @@ macro testmodule(source, kwargs...)
     esc(:(mod = include($source);
           if isdefined(mod, :runtests)
               ExampleJuggler.verbose() && @info "testing " * basename($(source))
-              invokelatest(getproperty(mod, :runtests); $(kwargs...))
+              Base.invokelatest(getproperty(mod, :runtests); $(kwargs...))
           end))
 end
 

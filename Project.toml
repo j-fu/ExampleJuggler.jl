@@ -1,8 +1,7 @@
 name = "ExampleJuggler"
 uuid = "3bbe58f8-ed81-4c4e-a134-03e85fcf4a1a"
 authors = ["Jürgen Fuhrmann <juergen-fuhrmann@web.de>"]
-
-version = "0.3.3"
+version = "0.3.4"
 
 [deps]
 AbstractTrees = "1520ce14-60c1-5f80-bbc7-55ef81b5835c"
