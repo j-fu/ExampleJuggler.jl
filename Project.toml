@@ -1,6 +1,7 @@
 name = "ExampleJuggler"
 uuid = "3bbe58f8-ed81-4c4e-a134-03e85fcf4a1a"
 authors = ["Jürgen Fuhrmann <juergen-fuhrmann@web.de>"]
+
 version = "0.3.1"
 
 [deps]
