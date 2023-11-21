@@ -27,7 +27,7 @@ ExampleJuggler.verbose!(true)
 
 example_dir = joinpath(@__DIR__, "..", "examples")
 
-modules = ["ExampleLiterate.jl"]
+modules = ["ExampleModule.jl"]
 notebooks = ["PlutoTemplate.jl", "ExamplePluto.jl"]
 scripts = ["testscript.jl", "PlutoTemplate.jl", "ExamplePluto.jl"]
 
@@ -55,7 +55,7 @@ DocMeta.setdocmeta!(ExampleJuggler, :DocTestSetup, :(using ExampleJuggler); recu
 
 example_dir = joinpath(@__DIR__, "..", "examples")
 
-modules = ["ExampleLiterate.jl"]
+modules = ["ExampleModule.jl"]
     
 notebooks = ["PlutoTemplate.jl"
                  "Example with Graphics" => "ExamplePluto.jl"]

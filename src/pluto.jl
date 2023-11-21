@@ -91,7 +91,7 @@ Keyword arguments:
   As a consequence, if this default is kept, it is necessary to have all package dependencies of the
   notebooks in the package environment.
 - `iframe`: boolean (default: false). 
-    - If `true`, html files are produced from the notebooks via `PlutoSliderServer.jl`, similar to Pluto's
+    - If `true`, html files are produced from the notebooks via [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl), similar to Pluto's
       html export. For documenter, a markdown page is created which contains statements to show the 
       notebook html in an iframe. The advantage of this method is that active javascript content is shown.
       The disadvantage is weak integration into documenter.
