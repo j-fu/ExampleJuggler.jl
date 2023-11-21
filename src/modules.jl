@@ -36,7 +36,7 @@ macro plotmodules(example_dir, modules, kwargs...)
     esc(quote
             sources = last.(ExampleJuggler.homogenize_notebooklist($modules))
             for source in sources
-                ExampleJuggler.@plotmodule(joinpath(example_dir, source), $(kwargs...))
+                ExampleJuggler.@plotmodule(joinpath($example_dir, source), $(kwargs...))
             end
         end)
 end
@@ -89,7 +89,7 @@ if it is defined in this module, passing `kwargs...`.
 macro testmodule(source, kwargs...)
     esc(:(mod = include($source);
           if isdefined(mod, :runtests)
-              ExampleJuggler.verbose() && @info "calling runtests() from " * normpath($(source))
+              ExampleJuggler.verbose() && @info "testing " * basename($(source))
               invokelatest(getproperty(mod, :runtests); $(kwargs...))
           end))
 end
@@ -102,7 +102,7 @@ Test several scripts defining modules via [`@testmodule`](@ref).
 macro testmodules(example_dir, sources, kwargs...)
     esc(quote
             for source in $(sources)
-                ExampleJuggler.@testmodule(joinpath(example_dir, source), $(kwargs...))
+                ExampleJuggler.@testmodule(joinpath($(example_dir), source), $(kwargs...))
             end
         end)
 end

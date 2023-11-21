@@ -7,9 +7,9 @@ it in the context of the calling module. If the script contains a function
 test correctness. 
 """
 macro testscript(source, kwargs...)
-    esc(:(mod = eval(ExampleJuggler.parsescript($(source)));
+    esc(:(ExampleJuggler.verbose() && @info "testing " * basename($(source));
+          mod = eval(ExampleJuggler.parsescript($(source)));
           if isdefined(mod, :runtests)
-              ExampleJuggler.verbose() && @info "calling runtests() from " * normpath($(source))
               invokelatest(getproperty(mod, :runtests); $(kwargs...))
           end))
 end
@@ -25,7 +25,7 @@ Run scripts in the context of the calling module via [`@testscript`](@ref)
 macro testscripts(example_dir, sources, kwargs...)
     esc(quote
             for source in $(sources)
-                ExampleJuggler.@testscript(joinpath(example_dir, source), $(kwargs...))
+                ExampleJuggler.@testscript(joinpath($(example_dir), source), $(kwargs...))
             end
         end)
 end
