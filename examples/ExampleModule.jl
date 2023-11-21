@@ -1,5 +1,5 @@
 #=
-# ExampleLiterate.jl
+# ExampleModule.jl
 
 ([source code](@__SOURCE_URL__))
 
@@ -11,7 +11,7 @@ via the [`ExampleJuggler.docmodules`](@ref) method.
 ![](mock_xt.svg)
 
 =#
-module ExampleLiterate
+module ExampleModule
 
 ismakie(Plotter::Any) = false
 ismakie(Plotter::Module) = isdefined(Plotter, :Makie)

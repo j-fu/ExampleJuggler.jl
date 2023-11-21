@@ -42,11 +42,10 @@ macro plotmodules(example_dir, modules, kwargs...)
 end
 
 """
-         docmodules(example_sources;
-                     source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples")
+         docmodules(example_sources; kwargs...)
 
-Generate markdown files for use with documenter from list of Julia code examples.
-See [ExampleLiterate.jl](@ref) for an example.
+Generate markdown files for use with documenter from list of Julia code examples via [Literate.jl](https://github.com/fredrikekre/Literate.jl).
+See [ExampleModule.jl](@ref) for an example.
 """
 function docmodules(example_dir, modules; kwargs...)
     md_dir = example_md_dir(module_examples)
@@ -73,9 +72,8 @@ end
 """
     @docmodules(example_dir, modules, kwargs...)
 
-Generate markdown files and plots for use with documenter from list of Julia module code examples.
-See [ExampleLiterate.jl](@ref) for an example. `kwargs` are passed to the `generateplots` method
-of the corresponding module source.
+Generate markdown files and plots for use with documenter from list of Julia modules.
+Wrapper macro for [`docmodules`](@ref).
 """
 macro docmodules(example_dir, modules, kwargs...)
     esc(:(ExampleJuggler.@plotmodules(example_dir, modules, $(kwargs...));

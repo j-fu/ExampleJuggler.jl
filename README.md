@@ -10,7 +10,7 @@ This package also could be called "DocumenterExampleHandler.jl". It helps to mai
 Code examples could be in plain Julia scripts, Julia scripts containing modules or pluto notebooks and serve three purposes:
 - Ready to run by users
 - Part of CI tests
-- Well integrated into documenter based documentation (via Literate.jl, PlutoStaticHTML.jl or PlutoSliderServer.jl)
+- Well integrated into documenter based documentation (via [Literate.jl](https://github.com/fredrikekre/Literate.jl), [PlutoStaticHTML.jl](https://github.com/rikhuijzer/PlutoStaticHTML.jl) or [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl))
   
 Maintaining a list of examples leads to considerable boilerplate ("example juggling" - that is why the name ...) in `test/runtest.jl` and `docs/make.jl`.
 This package helps to hide this boilerplate behind its API.

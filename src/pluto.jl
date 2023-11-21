@@ -95,7 +95,7 @@ Keyword arguments:
       html export. For documenter, a markdown page is created which contains statements to show the 
       notebook html in an iframe. The advantage of this method is that active javascript content is shown.
       The disadvantage is weak integration into documenter.
-    - If false, Documenter markdown files are ceated via `PlutoStaticHTML.jl`. These integrate well with
+    - If false, Documenter markdown files are ceated via  [PlutoStaticHTML.jl](https://github.com/rikhuijzer/PlutoStaticHTML.jl). These integrate well with
       Documenter, but are (as of now) unable to show active javascript content. Graphics is best prepared
       with CairoMakie.
 - `source_prefix`: Path prefix to the notebooks on github (for generating download links)

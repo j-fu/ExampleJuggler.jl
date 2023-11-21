@@ -1,7 +1,7 @@
 """
     docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height)
 
-Document notebooks via plutosliderserver.
+Document notebooks via  [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl)
 """
 function docplutosliderserver(example_dir, notebooks;
                               source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples",
