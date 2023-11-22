@@ -7,15 +7,16 @@
 ## Documentation
 ```@docs
 @docmodules
+@docscripts
 docplutonotebooks
 @docplutonotebooks
 ```
 
 ## Testing
 ```@docs
-testplutonotebooks
-@testplutonotebooks
 @testmodules
 @testscripts
+testplutonotebooks
+@testplutonotebooks
 ```
 

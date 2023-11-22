@@ -29,3 +29,36 @@ macro testscripts(example_dir, sources, kwargs...)
             end
         end)
 end
+
+macro plotscript(source, kwargs...)
+    esc(:(mod = eval(ExampleJuggler.parsescript($(source)));
+          if isdefined(mod, :generateplots)
+              ExampleJuggler.verbose() && @info "generating plots for " * normpath($(source))
+              Base.invokelatest(getproperty(mod, :generateplots), ExampleJuggler.example_md_dir(ExampleJuggler.script_examples);
+                                $(kwargs...))
+          end))
+end
+
+macro plotscripts(example_dir, modules, kwargs...)
+    esc(quote
+            sources = last.(ExampleJuggler.homogenize_notebooklist($(modules)))
+            for source in sources
+                base, ext = splitext(source)
+                if ext == ".jl"
+                    ExampleJuggler.@plotscript(joinpath($example_dir, source), $(kwargs...))
+                end
+            end
+        end)
+end
+
+"""
+    @docscripts(example_dir, modules, kwargs...)
+
+Generate markdown files and plots for use with documenter from list of Julia modules.
+Wrapper macro for [`docmodules`](@ref).
+"""
+macro docscripts(example_dir, modules, kwargs...)
+    esc(:(ExampleJuggler.@plotscripts($example_dir, $modules, $(kwargs...));
+          ExampleJuggler.docmodules($example_dir, $modules; x_examples = ExampleJuggler.script_examples,
+                                    $(kwargs...))))
+end

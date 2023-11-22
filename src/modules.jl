@@ -23,7 +23,7 @@ macro plotmodule(source, kwargs...)
           if isdefined(mod, :generateplots)
               ExampleJuggler.verbose() && @info "generating plots for " * normpath($(source))
               Base.invokelatest(getproperty(mod, :generateplots), ExampleJuggler.example_md_dir(ExampleJuggler.module_examples);
-                           $(kwargs...))
+                                $(kwargs...))
           end))
 end
 
@@ -50,8 +50,8 @@ end
 Generate markdown files for use with documenter from list of Julia code examples via [Literate.jl](https://github.com/fredrikekre/Literate.jl).
 See [ExampleModule.jl](@ref) for an example.
 """
-function docmodules(example_dir, modules; kwargs...)
-    md_dir = example_md_dir(module_examples)
+function docmodules(example_dir, modules; x_examples = module_examples, kwargs...)
+    md_dir = example_md_dir(x_examples)
     modulelist = homogenize_notebooklist(modules)
     modules = last.(modulelist)
     example_sources = joinpath.(example_dir, modules)
@@ -59,7 +59,7 @@ function docmodules(example_dir, modules; kwargs...)
     for example_source in example_sources
         example_base, ext = splitext(example_source)
         if ext == ".jl"
-            cp(example_source, joinpath(example_md_dir(ExampleJuggler.module_examples), basename(example_source)))
+            cp(example_source, joinpath(example_md_dir(x_examples), basename(example_source)))
             Literate.markdown(example_source,
                               md_dir;
                               documenter = false,
@@ -68,7 +68,7 @@ function docmodules(example_dir, modules; kwargs...)
         else
             @warn "$(example_source) appears to be not a Julia file, skipping"
         end
-        push!(example_md, joinpath(module_examples, splitext(basename(example_source))[1] * ".md"))
+        push!(example_md, joinpath(x_examples, splitext(basename(example_source))[1] * ".md"))
     end
     Pair.(first.(modulelist), example_md)
 end
