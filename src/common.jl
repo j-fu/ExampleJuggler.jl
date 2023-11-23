@@ -6,10 +6,11 @@ function verbose!(v::Bool)
     verbosity = v
 end
 
+const script_examples = "script_examples"
 const module_examples = "module_examples"
 const pluto_examples = "pluto_examples"
 const plutostatichtml_examples = "plutostatichtml_examples"
-const all_examples = [module_examples, pluto_examples, plutostatichtml_examples]
+const all_examples = [module_examples, pluto_examples, plutostatichtml_examples, script_examples]
 
 function cleanexamples()
     for examples in all_examples

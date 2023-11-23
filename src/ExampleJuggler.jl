@@ -19,7 +19,7 @@ include("modules.jl")
 export @docmodules, @testmodules
 
 include("scripts.jl")
-export @testscripts
+export @docscripts, @testscripts
 
 include("pluto.jl")
 export testplutonotebooks, @testplutonotebooks, docplutonotebooks, @docplutonotebooks

@@ -7,6 +7,7 @@ function mkdocs()
 
     example_dir = joinpath(@__DIR__, "..", "examples")
 
+    scripts = ["ExampleScript.jl"]
     modules = ["ExampleModule.jl"]
 
     notebooks = ["PlutoTemplate.jl"
@@ -14,6 +15,7 @@ function mkdocs()
 
     cleanexamples()
 
+    script_examples = @docscripts(example_dir, scripts)
     module_examples = @docmodules(example_dir, modules, Plotter=CairoMakie)
     html_examples = @docplutonotebooks(example_dir, notebooks, iframe=false)
     pluto_examples = @docplutonotebooks(example_dir, notebooks, iframe=true)
@@ -30,6 +32,7 @@ function mkdocs()
                  "Home" => "index.md",
                  "api.md",
                  "Modules" => module_examples,
+                 "Scripts" => script_examples,
                  "Notebooks" => html_examples,
                  "Notebooks in iframe" => pluto_examples,
                  "mock.md",
