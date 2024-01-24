@@ -5,7 +5,7 @@
 
 # ExampleJuggler.jl
 
-This package also could be called "DocumenterExampleHandler.jl". It helps to maintain comprehensive complete (i.e. ready to download and run) code examples in Documenter.jl documentation.
+This package also could be called "DocumenterAndTestExampleHandler.jl". It helps to maintain comprehensive complete (i.e. ready to download and run) code examples in Documenter.jl documentation.
 
 Code examples could be in plain Julia scripts, Julia scripts containing modules or pluto notebooks and serve three purposes:
 - Ready to be run by users
