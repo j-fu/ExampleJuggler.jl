@@ -10,4 +10,6 @@ ExampleJuggler.@testmodule
 ExampleJuggler.@plotmodule
 ExampleJuggler.@plotmodules
 ExampleJuggler.docmodules
+ExampleJuggler.startroot!
+ExampleJuggler.example_md_dir
 ```

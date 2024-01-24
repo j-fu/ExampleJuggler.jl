@@ -50,7 +50,9 @@ end
 Generate markdown files for use with documenter from list of Julia code examples via [Literate.jl](https://github.com/fredrikekre/Literate.jl).
 See [ExampleModule.jl](@ref) for an example.
 """
-function docmodules(example_dir, modules; x_examples = module_examples, kwargs...)
+function docmodules(example_dir, modules; x_examples = module_examples, force=true, kwargs...)
+    startroot!(pwd())
+    thisdir=pwd()
     md_dir = example_md_dir(x_examples)
     modulelist = homogenize_notebooklist(modules)
     modules = last.(modulelist)
@@ -59,7 +61,7 @@ function docmodules(example_dir, modules; x_examples = module_examples, kwargs..
     for example_source in example_sources
         example_base, ext = splitext(example_source)
         if ext == ".jl"
-            cp(example_source, joinpath(example_md_dir(x_examples), basename(example_source)))
+            cp(example_source, joinpath(example_md_dir(x_examples), basename(example_source));force)
             Literate.markdown(example_source,
                               md_dir;
                               documenter = false,
@@ -70,6 +72,7 @@ function docmodules(example_dir, modules; x_examples = module_examples, kwargs..
         end
         push!(example_md, joinpath(x_examples, splitext(basename(example_source))[1] * ".md"))
     end
+    cd(thisdir)
     Pair.(first.(modulelist), example_md)
 end
 

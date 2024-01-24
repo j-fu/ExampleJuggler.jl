@@ -110,6 +110,8 @@ function docplutonotebooks(example_dir, notebooklist;
                            source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples",
                            iframe_height = "500px",
                            pluto_project = Base.active_project())
+    startroot!(pwd())
+    thisdir=pwd()
     notebooklist = homogenize_notebooklist(notebooklist)
     notebooks = last.(notebooklist)
     if iframe
@@ -117,6 +119,7 @@ function docplutonotebooks(example_dir, notebooklist;
     else
         mdpaths = docplutostatichtml(example_dir, notebooks; pluto_project)
     end
+    cd(thisdir)
     Pair.(first.(notebooklist), mdpaths)
 end
 

@@ -3,7 +3,7 @@
 
 Document notebooks via  [PlutoStaticHTML.jl](https://github.com/rikhuijzer/PlutoStaticHTML.jl).
 """
-function docplutostatichtml(example_dir, notebooks; pluto_project = Base.active_project())
+function docplutostatichtml(example_dir, notebooks; force=true, pluto_project = Base.active_project())
     project = Base.active_project()
     if pluto_project != nothing
         Pkg.activate(pluto_project)
@@ -24,7 +24,7 @@ function docplutostatichtml(example_dir, notebooks; pluto_project = Base.active_
 
     build_notebooks(bopts, notebooks, oopts; session)
     for nb in notebookmd
-        mv(joinpath(example_dir, nb), joinpath(example_md_dir(plutostatichtml_examples), nb),force=true)
+        mv(joinpath(example_dir, nb), joinpath(example_md_dir(plutostatichtml_examples), nb);force)
     end
     Pkg.activate(project)
     joinpath.(plutostatichtml_examples, notebookmd)

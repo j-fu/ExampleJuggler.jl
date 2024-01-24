@@ -1,11 +1,12 @@
 """
-    docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height)
+    docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height, force)
 
 Document notebooks via  [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl)
 """
 function docplutosliderserver(example_dir, notebooks;
                               source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples",
                               iframe_height = "500px",
+                              force=true,
                               pluto_project = Base.active_project())
     if pluto_project != nothing
         Pkg.activate(pluto_project)
@@ -24,7 +25,7 @@ function docplutosliderserver(example_dir, notebooks;
 
     for notebook in notebooks
         base = splitext(basename(notebook))[1]
-        cp(joinpath(example_dir, notebook), joinpath(example_md_dir(ExampleJuggler.pluto_examples), basename(notebook)))
+        cp(joinpath(example_dir, notebook), joinpath(example_md_dir(ExampleJuggler.pluto_examples), basename(notebook));force)
         mdstring = """
 ##### [$(base).jl](@id $(base))
 

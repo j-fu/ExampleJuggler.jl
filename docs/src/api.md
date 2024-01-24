@@ -10,6 +10,8 @@
 @docscripts
 docplutonotebooks
 @docplutonotebooks
+cleanexamples
+ExampleJuggler.verbose!
 ```
 
 ## Testing
