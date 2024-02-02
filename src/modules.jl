@@ -1,7 +1,7 @@
 """
 $(SIGNATURES)
 
-Replace SOURCE_URL marker with url of source.
+Replace "@__SOURCE_URL__" marker with url of source.
 Used for preprocessing the input of `Literate.markdown` in [`ExampleJuggler.docmodules`](@ref).
 """
 function replace_source_url(input, source_url)
@@ -12,6 +12,23 @@ function replace_source_url(input, source_url)
     end
     return String(take!(lines_out))
 end
+
+ 
+"""
+$(SIGNATURES)
+
+Replace "@@" marker with "@".
+Used for postprocessing the output of `Literate.markdown` in [`ExampleJuggler.docmodules`](@ref).
+"""
+function replace_atat(input)
+    lines_in = collect(eachline(IOBuffer(input)))
+    lines_out=IOBuffer()
+    for line in lines_in
+        println(lines_out,replace(line,"@@" => "@"))
+    end
+    return String(take!(lines_out))
+end
+
 
 """
     @plotmodule(modules, kwargs...)
@@ -45,12 +62,18 @@ macro plotmodules(example_dir, modules, kwargs...)
 end
 
 """
-         docmodules(example_sources; kwargs...)
+         docmodules(example_dir, example_modules; kwargs...)
 
-Generate markdown files for use with documenter from list of Julia code examples via [Literate.jl](https://github.com/fredrikekre/Literate.jl).
+Generate markdown files for use with documenter from list of Julia code examples in `example_dir` 
+via [Literate.jl](https://github.com/fredrikekre/Literate.jl) in form of modules.
+
+Keyword arguments:
+
+- `use_module_titles`: use titles from module input files
+
 See [ExampleModule.jl](@ref) for an example.
 """
-function docmodules(example_dir, modules; x_examples = module_examples, force=true, kwargs...)
+function docmodules(example_dir, modules; use_module_titles=false, x_examples = module_examples, force=true, kwargs...)
     startroot!(pwd())
     thisdir=pwd()
     md_dir = example_md_dir(x_examples)
@@ -66,14 +89,20 @@ function docmodules(example_dir, modules; x_examples = module_examples, force=tr
                               md_dir;
                               documenter = false,
                               info = verbose(),
-                              preprocess = buffer -> replace_source_url(buffer, basename(example_source)))
+                              preprocess = buffer -> replace_source_url(buffer, basename(example_source)),
+                              postprocess=replace_atat
+                              )
         else
             @warn "$(example_source) appears to be not a Julia file, skipping"
         end
         push!(example_md, joinpath(x_examples, splitext(basename(example_source))[1] * ".md"))
     end
     cd(thisdir)
-    Pair.(first.(modulelist), example_md)
+    if use_module_titles
+        example_md
+    else
+        Pair.(first.(modulelist), example_md)
+    end
 end
 
 """

@@ -2,6 +2,7 @@
 
 ```@docs
 ExampleJuggler.replace_source_url
+ExampleJuggler.replace_atat
 ExampleJuggler.testplutonotebook
 ExampleJuggler.docplutostatichtml
 ExampleJuggler.docplutosliderserver
