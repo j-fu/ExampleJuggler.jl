@@ -3,7 +3,7 @@
 
 Document notebooks via  [PlutoStaticHTML.jl](https://github.com/rikhuijzer/PlutoStaticHTML.jl).
 """
-function docplutostatichtml(example_dir, notebooks; force=true, pluto_project = Base.active_project())
+function docplutostatichtml(example_dir, notebooks; distributed=true, force=true, pluto_project = Base.active_project())
     project = Base.active_project()
     if pluto_project != nothing
         Pkg.activate(pluto_project)
@@ -20,8 +20,8 @@ function docplutostatichtml(example_dir, notebooks; force=true, pluto_project = 
     session.options.server.launch_browser = false
     session.options.server.dismiss_update_notification = true
     # session.options.evaluation.capture_stdout = false
-    #    session.options.evaluation.workspace_use_distributed = false # this makes it fast
-
+    session.options.evaluation.workspace_use_distributed = distributed
+    @show distributed
     build_notebooks(bopts, notebooks, oopts; session)
     for nb in notebookmd
         mv(joinpath(example_dir, nb), joinpath(example_md_dir(plutostatichtml_examples), nb);force)

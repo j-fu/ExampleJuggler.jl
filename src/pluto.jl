@@ -98,6 +98,7 @@ Keyword arguments:
     - If false, Documenter markdown files are ceated via  [PlutoStaticHTML.jl](https://github.com/rikhuijzer/PlutoStaticHTML.jl). These integrate well with
       Documenter, but are (as of now) unable to show active javascript content. Graphics is best prepared
       with CairoMakie.
+- `distributed`: Use parallel evaluation when `iframe==false`
 - `source_prefix`: Path prefix to the notebooks on github (for generating download links)
    Default: "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples".
 - `iframe_height`: Height of the iframe generated. Default: "500px".
@@ -109,6 +110,7 @@ function docplutonotebooks(example_dir, notebooklist;
                            iframe = false,
                            source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples",
                            iframe_height = "500px",
+                           distributed = true,
                            pluto_project = Base.active_project())
     startroot!(pwd())
     thisdir=pwd()
@@ -117,7 +119,7 @@ function docplutonotebooks(example_dir, notebooklist;
     if iframe
         mdpaths = docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height)
     else
-        mdpaths = docplutostatichtml(example_dir, notebooks; pluto_project)
+        mdpaths = docplutostatichtml(example_dir, notebooks; distributed, pluto_project)
     end
     cd(thisdir)
     Pair.(first.(notebooklist), mdpaths)
