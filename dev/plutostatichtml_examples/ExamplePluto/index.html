@@ -25,8 +25,8 @@
 <!--
     # This information is used for caching.
     [PlutoStaticHTML.State]
-    input_sha = "e4924f6d07c56ea7a84892b987257e29baf0c829663767943add6798e1375c6e"
-    julia_version = "1.10.0"
+    input_sha = "6e2b2020a711ff8f0a4ba9008b78e73eabee336392646772be70ab80944d80b7"
+    julia_version = "1.10.1"
 -->
 
 <div class="markdown"><h1>Graphics example</h1></div>
@@ -34,7 +34,7 @@
 <pre class='language-julia'><code class='language-julia'>begin
     import Pkg as _Pkg
     haskey(ENV, "PLUTO_PROJECT") && _Pkg.activate(ENV["PLUTO_PROJECT"])
-    using Revise
+    # using Revise
     using Test
     using ExampleJuggler
     using CairoMakie
@@ -46,7 +46,7 @@ end;</code></pre>
 <pre class="code-output documenter-example-output" id="var-fx">(-1.0:0.020202020202020204:1.0, [-0.1411200080598672, -0.20082373513863774, -0.25979004340277745, -0.3178024103126908, -0.37464781617321513, -0.4301175263356401, -0.4840078576651631, -0.5361209264593333, -0.5862653750711555, -0.6342570745687081  …  0.6342570745687081, 0.5862653750711555, 0.5361209264593333, 0.4840078576651631, 0.4301175263356401, 0.37464781617321513, 0.3178024103126908, 0.25979004340277745, 0.20082373513863774, 0.1411200080598672])</pre>
 
 <pre class='language-julia'><code class='language-julia'>let
-    fig = Figure(; resolution = (600, 300))
+    fig = Figure(; size = (600, 300))
     lines!(Axis(fig[1, 1]), x, fx)
     fig
 end</code></pre>
@@ -56,7 +56,7 @@ end</code></pre>
 <pre class="code-output documenter-example-output" id="var-y">(-1.0:0.020202020202020204:1.0, 0.0:0.10101010101010101:10.0, [-0.1411200080598672 0.16073732823467404 … -0.9583144291311456 -0.9999118601072672; -0.20082373513863774 0.10066081638613873 … -0.9392494743193722 -0.9988801955657767; … ; 0.20082373513863774 0.4840078576651631 … -0.9985402916219825 -0.9369254909318261; 0.1411200080598672 0.4301175263356401 … -0.9999784316946084 -0.956375928404503])</pre>
 
 <pre class='language-julia'><code class='language-julia'>let
-    fig = Figure(; resolution = (300, 300))
+    fig = Figure(; size = (300, 300))
     heatmap!(Axis(fig[1, 1]), y, t, fyt)
     fig
 end</code></pre>
@@ -65,11 +65,10 @@ end</code></pre>
 
 
 <div class='manifest-versions'>
-<p>Built with Julia 1.10.0 and</p>
+<p>Built with Julia 1.10.1 and</p>
 CairoMakie 0.11.5<br>
 ExampleJuggler 0.4.0<br>
-Pkg 1.10.0<br>
-Revise 3.5.13
+Pkg 1.10.0
 </div>
 
-<!-- PlutoStaticHTML.End --></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../PlutoTemplate/">« PlutoTemplate</a><a class="docs-footer-nextpage" href="../../pluto_examples/PlutoTemplate/">PlutoTemplate »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="auto">Automatic (OS)</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.2.1 on <span class="colophon-date" title="Friday 2 February 2024 22:49">Friday 2 February 2024</span>. Using Julia version 1.10.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+<!-- PlutoStaticHTML.End --></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../PlutoTemplate/">« PlutoTemplate</a><a class="docs-footer-nextpage" href="../../pluto_examples/PlutoTemplate/">PlutoTemplate »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="auto">Automatic (OS)</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.2.1 on <span class="colophon-date" title="Tuesday 20 February 2024 23:04">Tuesday 20 February 2024</span>. Using Julia version 1.10.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
