@@ -1,8 +1,12 @@
-"""
-    docplutostatichtml(example_dir, notebooks; pluto_project)
+module ExampleJugglerPlutoStaticHTMLExt
 
-Document notebooks via  [PlutoStaticHTML.jl](https://github.com/rikhuijzer/PlutoStaticHTML.jl).
-"""
+import Pkg
+import ExampleJuggler: docplutostatichtml, verbose, example_md_dir, plutostatichtml_examples
+using PlutoStaticHTML: OutputOptions, documenter_output, BuildOptions, build_notebooks
+isdefined(Base, :get_extension) ? import PlutoStaticHTML : import ..PlutoStaticHTML
+
+
+
 function docplutostatichtml(example_dir, notebooks; distributed=true, force=true, pluto_project = Base.active_project())
     project = Base.active_project()
     if pluto_project != nothing
@@ -14,7 +18,7 @@ function docplutostatichtml(example_dir, notebooks; distributed=true, force=true
 
     oopts = OutputOptions(; append_build_context = true)
     bopts = BuildOptions(example_dir; output_format = documenter_output)
-    session = Pluto.ServerSession()
+    session = PlutoStaticHTML.Pluto.ServerSession()
     session.options.server.disable_writing_notebook_files = true
     session.options.server.show_file_system = false
     session.options.server.launch_browser = false
@@ -28,4 +32,7 @@ function docplutostatichtml(example_dir, notebooks; distributed=true, force=true
     end
     Pkg.activate(project)
     joinpath.(plutostatichtml_examples, notebookmd)
+end
+
+
 end

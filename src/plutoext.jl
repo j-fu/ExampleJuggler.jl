@@ -1,49 +1,37 @@
 """
+    docplutostatichtml(example_dir, notebooks; pluto_project)
+
+Document notebooks via  [PlutoStaticHTML.jl](https://github.com/rikhuijzer/PlutoStaticHTML.jl).
+Implemented in extension `ExampleJugglerPlutoStaticHTMLExt`.
+"""
+function docplutostatichtml end
+
+
+"""
+    docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height, force)
+
+Document notebooks via  [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl)
+Implemented in extension `ExampleJugglerPlutoSliderServerExt`.
+"""
+function docplutosliderserver end
+
+
+"""
     testplutonotebook(notebookname; pluto_project = nothing)
 
-Test pluto notebook in a Pluto session. Core of [`testplutonotebooks`](@ref)
+Test pluto notebook in a Pluto session. Core of [`testplutonotebooks`](@ref).
+Implemented in extension `ExampleJugglerPlutoExt`.
 """
-function testplutonotebook(notebookname; pluto_project = Base.active_project())
-    if verbose()
-        @info "running notebook $(basename(notebookname))"
-    end
-    if pluto_project != nothing
-        ENV["PLUTO_PROJECT"] = pluto_project
-    end
-    session = Pluto.ServerSession()
-    session.options.server.disable_writing_notebook_files = true
-    session.options.server.show_file_system = false
-    session.options.server.launch_browser = false
-    session.options.server.dismiss_update_notification = true
-    session.options.evaluation.capture_stdout = false
-    session.options.evaluation.workspace_use_distributed = false
+function testplutonotebook end
 
-    wd = pwd()
-    t = @elapsed notebook = Pluto.SessionActions.open(session, notebookname; run_async = false)
-    if verbose()
-        @info "notebook executed in $(round(t,sigdigits=4)) seconds"
-    end
-    cd(wd)
 
-    errored = false
-    for c in notebook.cells
-        if occursin("@test", c.code)
-            @test !c.errored
-        end
-        if c.errored
-            errored = true
-            @error "Error in  $(c.cell_id): $(c.output.body[:msg])\n\n $(c.code)\n"
-        end
-    end
-    ENV["PLUTO_PROJECT"] = nothing
-    !errored
-end
 
 """
      testplutonotebooks(example_dir, notebooks; kwargs...)
 
 Test pluto notebooks as notebooks in a pluto session which means that
-the notebook code is run in an extra process.
+the notebook code is run in an extra process. Implemented in an extension triggered
+by `using Pluto`.
 
 The method tracks `Test.@test` statements in notebook cells via 
 testing errors of failed cells. The method does not invoke eventual `runteststs()` methods
@@ -63,10 +51,17 @@ Keyword arguments:
 
 """
 function testplutonotebooks(example_dir, notebooks; kwargs...)
+    if isdefined(Base,:get_extension)
+        ext=Base.get_extension(ExampleJuggler,:ExampleJugglerPlutoExt)
+        if isnothing(ext)
+            error("Please import/use Pluto.jl in order to use testplutonotebooks()")
+        end
+    end
     for notebook in notebooks
         testplutonotebook(joinpath(example_dir, notebook); kwargs...)
     end
 end
+
 
 """
      @testplutonotebooks(example_dir,notebooks,  kwargs...)
@@ -77,6 +72,7 @@ Just for aestethic reasons, as other parts of the API have to be macros.
 macro testplutonotebooks(example_dir, notebooks, kwargs...)
     esc(:(ExampleJuggler.testplutonotebooks($example_dir, $notebooks; $(kwargs...))))
 end
+
 
 """
     docplutonotebooks(example_dir, notebooks, kwargs...)
@@ -94,10 +90,10 @@ Keyword arguments:
     - If `true`, html files are produced from the notebooks via [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl), similar to Pluto's
       html export. For documenter, a markdown page is created which contains statements to show the 
       notebook html in an iframe. The advantage of this method is that active javascript content is shown.
-      The disadvantage is weak integration into documenter.
+      The disadvantage is weak integration into documenter. Prerequisite is `import PlutoSliderServer` in `docs/make.jl`.
     - If false, Documenter markdown files are ceated via  [PlutoStaticHTML.jl](https://github.com/rikhuijzer/PlutoStaticHTML.jl). These integrate well with
       Documenter, but are (as of now) unable to show active javascript content. Graphics is best prepared
-      with CairoMakie.
+      with CairoMakie. Prerequisite is `import PlutoStaticHTML` in `docs/make.jl`.
 - `distributed`: Use parallel evaluation when `iframe==false`
 - `source_prefix`: Path prefix to the notebooks on github (for generating download links)
    Default: "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples".
@@ -117,8 +113,20 @@ function docplutonotebooks(example_dir, notebooklist;
     notebooklist = homogenize_notebooklist(notebooklist)
     notebooks = last.(notebooklist)
     if iframe
+        if isdefined(Base,:get_extension)
+            ext=Base.get_extension(ExampleJuggler,:ExampleJugglerPlutoSliderServerExt)
+            if isnothing(ext)
+                error("Please import/use PlutoSliderServer.jl in order to use docplutonotebooks with `iframe=true`")
+            end
+        end
         mdpaths = docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height)
     else
+        if isdefined(Base,:get_extension)
+            ext=Base.get_extension(ExampleJuggler,:ExampleJugglerPlutoStaticHTMLExt)
+            if isnothing(ext)
+                error("Please have Pluto in the environment and import/use PlutoStaticHTML.jl in order to use docplutonotebooks with `iframe=false`")
+            end
+        end
         mdpaths = docplutostatichtml(example_dir, notebooks; distributed, pluto_project)
     end
     cd(thisdir)
@@ -134,3 +142,6 @@ Just for aestethic reasons, as other parts of the API have to be macros.
 macro docplutonotebooks(example_dir, notebooklist, kwargs...)
     esc(:(docplutonotebooks($example_dir, $notebooklist; $(kwargs...))))
 end
+
+
+

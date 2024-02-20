@@ -1,4 +1,5 @@
 using Documenter, ExampleJuggler, CairoMakie
+import PlutoStaticHTML, PlutoSliderServer
 
 ExampleJuggler.verbose!(true)
 

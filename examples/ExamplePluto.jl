@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.37
+# v0.19.38
 
 using Markdown
 using InteractiveUtils
@@ -8,7 +8,7 @@ using InteractiveUtils
 begin
     import Pkg as _Pkg
     haskey(ENV, "PLUTO_PROJECT") && _Pkg.activate(ENV["PLUTO_PROJECT"])
-    using Revise
+    # using Revise
     using Test
     using ExampleJuggler
     using CairoMakie
@@ -25,7 +25,7 @@ x, fx = mock_x()
 
 # ╔═╡ c63e2859-d97d-4a96-a37b-02865d279d4d
 let
-    fig = Figure(; resolution = (600, 300))
+    fig = Figure(; size = (600, 300))
     lines!(Axis(fig[1, 1]), x, fx)
     fig
 end
@@ -35,7 +35,7 @@ y, t, fyt = mock_xt()
 
 # ╔═╡ 0a190d57-c0c6-4091-bf61-bd546526da23
 let
-    fig = Figure(; resolution = (300, 300))
+    fig = Figure(; size = (300, 300))
     heatmap!(Axis(fig[1, 1]), y, t, fyt)
     fig
 end
@@ -53,22 +53,20 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
 ExampleJuggler = "3bbe58f8-ed81-4c4e-a134-03e85fcf4a1a"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 CairoMakie = "~0.11.5"
 ExampleJuggler = "~0.4.0"
-Revise = "~3.5.13"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.0"
+julia_version = "1.10.1"
 manifest_format = "2.0"
-project_hash = "d4fc9dfb3fe74732c796be0586ebb50173461cec"
+project_hash = "b18ad2205379b73c4183fe7a044e9b17ae0b2c22"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -304,7 +302,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.0.5+1"
+version = "1.1.0+0"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
@@ -1187,7 +1185,7 @@ version = "1.3.5+1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.23+2"
+version = "0.3.23+4"
 
 [[deps.OpenEXR]]
 deps = ["Colors", "FileIO", "OpenEXR_jll"]

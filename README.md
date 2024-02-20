@@ -15,6 +15,12 @@ Code examples could be in plain Julia scripts, Julia scripts containing modules 
 Maintaining a list of examples leads to considerable boilerplate ("example juggling" - that is why the name ...) in `test/runtest.jl` and `docs/make.jl`.
 This package helps to hide this boilerplate behind its API.
 
+## Breaking changes
+
+- v2.0.0: Moved all direct and indirect dependencies on Pluto into extensions. Correspondingly, one needs to
+  explicitely import Pluto, PlutoStaticHTML or PlutoSliderServer. They are not anymore direct dependencies of
+  ExampleJuggler.
+
 ## CI Tests
 
 With this package, `test/runtests.jl` can look  as follows:
@@ -22,6 +28,7 @@ With this package, `test/runtests.jl` can look  as follows:
 ```julia
 using Test
 using ExampleJuggler
+import Pluto
 
 ExampleJuggler.verbose!(true)
 
@@ -31,6 +38,7 @@ modules = ["ExampleModule.jl"]
 notebooks = ["PlutoTemplate.jl", "ExamplePluto.jl"]
 scripts = ["testscript.jl", "PlutoTemplate.jl", "ExamplePluto.jl"]
 
+# This needs `import Pluto`
 @testset "pluto notebooks" begin
     @testplutonotebooks(example_dir, notebooks)
 end
@@ -39,6 +47,7 @@ end
     @testmodules(example_dir, modules, a=2)
 end
 
+# This tests Pluto notebooks as scripts and doesn't need Pluto
 @testset "scripts + notebooks" begin
     @testscripts(example_dir, scripts)
 end
@@ -50,6 +59,7 @@ package for a more comprehensive setting):
 
 ```julia 
 using Documenter, ExampleJuggler, CairoMakie
+import PlutoStaticHTML
 
 DocMeta.setdocmeta!(ExampleJuggler, :DocTestSetup, :(using ExampleJuggler); recursive = true)
 
@@ -63,8 +73,7 @@ notebooks = ["PlutoTemplate.jl"
 cleanexamples()
 
 module_examples = @docmodules(example_dir, example_modules, Plotter=CairoMakie)
-
-html_examples = @docplutonotebooks(example_dir, notebooks
+html_examples = @docplutonotebooks(example_dir, notebooks)
 
 makedocs(; sitename = "ExampleJuggler.jl",
            modules = [ExampleJuggler],
@@ -77,6 +86,7 @@ makedocs(; sitename = "ExampleJuggler.jl",
                  "Modules" => module_examples,
                  "Notebooks" => html_examples,
              ])
+
 
 cleanexamples()
 

@@ -9,10 +9,13 @@ modules = ["ExampleModule.jl"]
 notebooks = ["PlutoTemplate.jl", "ExamplePluto.jl"]
 scripts = ["ExampleScript.jl"]
 
-@testset "pluto notebooks" begin
-    @testplutonotebooks(example_dir, notebooks)
-end
+# This kind of test needs `import Pluto`
+# and has been temporarily disabled due to https://github.com/fonsp/Pluto.jl/issues/2810
+# @testset "pluto notebooks" begin
+#    @testplutonotebooks(example_dir, notebooks)
+# end
 
+# This kind of test works without Pluto 
 @testset "notebooks as scripts" begin
     @testscripts(example_dir, notebooks)
 end
