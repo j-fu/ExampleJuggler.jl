@@ -1,8 +1,9 @@
-"""
-    docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height, force)
+module ExampleJugglerPlutoSliderServerExt
 
-Document notebooks via  [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl)
-"""
+import Pkg
+import ExampleJuggler: docplutosliderserver, verbose, example_md_dir, pluto_examples
+isdefined(Base, :get_extension) ? import PlutoSliderServer : import ..PlutoSliderServer
+
 function docplutosliderserver(example_dir, notebooks;
                               source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples",
                               iframe_height = "500px",
@@ -17,15 +18,15 @@ function docplutosliderserver(example_dir, notebooks;
     if verbose()
         @info "notebook output to $(normpath(Export_output_dir))"
     end
-    export_directory(example_dir;
-                     notebook_paths = notebooks,
-                     Export_output_dir,
-                     Export_offer_binder = false)
+    PlutoSliderServer.export_directory(example_dir;
+                                       notebook_paths = notebooks,
+                                       Export_output_dir,
+                                       Export_offer_binder = false)
     example_md = String[]
 
     for notebook in notebooks
         base = splitext(basename(notebook))[1]
-        cp(joinpath(example_dir, notebook), joinpath(example_md_dir(ExampleJuggler.pluto_examples), basename(notebook));force)
+        cp(joinpath(example_dir, notebook), joinpath(example_md_dir(pluto_examples), basename(notebook));force)
         mdstring = """
 ##### [$(base).jl](@id $(base))
 
@@ -43,4 +44,5 @@ function docplutosliderserver(example_dir, notebooks;
         push!(example_md, joinpath(pluto_examples, base * ".md"))
     end
     example_md
+end
 end

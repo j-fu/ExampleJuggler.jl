@@ -15,6 +15,12 @@ Code examples could be in plain Julia scripts, Julia scripts containing modules 
 Maintaining a list of examples leads to considerable boilerplate ("example juggling" - that is why the name ...) in `test/runtest.jl` and `docs/make.jl`.
 This package helps to hide this boilerplate behind its API.
 
+## Breaking changes
+
+- v2.0.0: Moved all direct and indirect dependencies on Pluto into extensions. Correspondingly, one needs to
+  explicitely import Pluto, PlutoStaticHTML or PlutoSliderServer. They are not anymore direct dependencies of
+  ExampleJuggler.
+
 ## CI Tests
 
 With this package, `test/runtests.jl` can look  as follows:
@@ -22,6 +28,7 @@ With this package, `test/runtests.jl` can look  as follows:
 ```julia
 using Test
 using ExampleJuggler
+import Pluto
 
 ExampleJuggler.verbose!(true)
 
@@ -64,8 +71,6 @@ cleanexamples()
 
 module_examples = @docmodules(example_dir, example_modules, Plotter=CairoMakie)
 
-html_examples = @docplutonotebooks(example_dir, notebooks
-
 makedocs(; sitename = "ExampleJuggler.jl",
            modules = [ExampleJuggler],
            format = Documenter.HTML(; size_threshold_ignore = last.(html_examples),
@@ -77,6 +82,8 @@ makedocs(; sitename = "ExampleJuggler.jl",
                  "Modules" => module_examples,
                  "Notebooks" => html_examples,
              ])
+
+html_examples = @docplutonotebooks(example_dir, notebooks
 
 cleanexamples()
 
