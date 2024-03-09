@@ -1,6 +1,7 @@
 [![ci](https://github.com/j-fu/ExampleJuggler.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/j-fu/ExampleJuggler.jl/actions/workflows/ci.yml)
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://j-fu.github.io/ExampleJuggler.jl/stable)
 [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://j-fu.github.io/ExampleJuggler.jl/dev)
+[![Aqua QA](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 
 # ExampleJuggler.jl
 
@@ -22,7 +23,8 @@ This package helps to hide this boilerplate behind its API.
 
 ## CI Tests
 
-With this package, `test/runtests.jl` can look  as follows:
+With this package, `test/runtests.jl` can look  as follows(please see [`test/runtests.jl`](https://github.com/j-fu/ExampleJuggler.jl/blob/main/test/runtests.jl) of this
+package for a more comprehensive setting):
 
 ```julia
 using Test
@@ -72,6 +74,8 @@ notebooks = ["PlutoTemplate.jl"
 cleanexamples()
 
 module_examples = @docmodules(example_dir, example_modules, Plotter=CairoMakie)
+
+# This needs to load PlutoStaticHTML
 html_examples = @docplutonotebooks(example_dir, notebooks)
 
 makedocs(; sitename = "ExampleJuggler.jl",
@@ -93,5 +97,5 @@ deploydocs(; repo = "github.com/j-fu/ExampleJuggler.jl.git", devbranch = "main")
 
 end
 ```
-In particular, graphics generation for module examples is supported.
+In particular, graphics generation for module and script examples is supported.
 

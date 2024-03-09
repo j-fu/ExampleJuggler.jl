@@ -1,5 +1,24 @@
-using Test
+using Test, Aqua
 using ExampleJuggler
+
+
+if isdefined(Docs,:undocumented_names) # >=1.11
+@testset "undocumented names" begin
+    @test isempty(Docs.undocumented_names(ExampleJuggler))
+end
+end
+
+@testset "Aqua" begin
+    Aqua.test_ambiguities(ExampleJuggler)
+    Aqua.test_unbound_args(ExampleJuggler)
+    Aqua.test_undefined_exports(ExampleJuggler)
+    Aqua.test_project_extras(ExampleJuggler)
+    Aqua.test_stale_deps(ExampleJuggler,ignore=[:Requires])
+    Aqua.test_deps_compat(ExampleJuggler)
+    Aqua.test_piracies(ExampleJuggler)
+    Aqua.test_persistent_tasks(ExampleJuggler)
+end
+
 
 ExampleJuggler.verbose!(true)
 
