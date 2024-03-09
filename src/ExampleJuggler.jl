@@ -1,3 +1,8 @@
+"""
+    ExampleJuggler
+
+$(read(joinpath(@__DIR__,"..","README.md"),String))
+"""
 module ExampleJuggler
 import Literate
 import Pkg

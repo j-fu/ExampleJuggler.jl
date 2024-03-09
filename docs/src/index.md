@@ -1,9 +1,9 @@
-````@eval
-using Markdown
-Markdown.parse("""
-$(read("../../README.md",String))
-""")
-````
+```@docs
+ExampleJuggler
+```
+```@contents
+Depth=5
+```
 
 
 
