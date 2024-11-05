@@ -7,7 +7,8 @@ isdefined(Base, :get_extension) ? import PlutoStaticHTML : import ..PlutoStaticH
 
 
 
-function docplutostatichtml(example_dir, notebooks; distributed=true, force=true, pluto_project = Base.active_project())
+function docplutostatichtml(example_dir, notebooks; append_build_context = true,
+                            distributed=true, force=true, pluto_project = Base.active_project())
     project = Base.active_project()
     if pluto_project != nothing
         Pkg.activate(pluto_project)
@@ -16,7 +17,8 @@ function docplutostatichtml(example_dir, notebooks; distributed=true, force=true
 
     notebookmd = [splitext(notebook)[1] * ".md" for notebook in notebooks]
 
-    oopts = OutputOptions(; append_build_context = true)
+    oopts = OutputOptions(; append_build_context)
+    @show oopts
     bopts = BuildOptions(example_dir; output_format = documenter_output)
     session = PlutoStaticHTML.Pluto.ServerSession()
     session.options.server.disable_writing_notebook_files = true
