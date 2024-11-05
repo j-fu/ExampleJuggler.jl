@@ -95,6 +95,8 @@ Keyword arguments:
       Documenter, but are (as of now) unable to show active javascript content. Graphics is best prepared
       with CairoMakie. Prerequisite is `import PlutoStaticHTML` in `docs/make.jl`.
 - `distributed`: Use parallel evaluation when `iframe==false`
+- `append_build_context`: pass this to [PlutoStaticHTML.OutputOptions](https://plutostatichtml.huijzer.xyz/dev/#PlutoStaticHTML.OutputOptions).
+   Possibly needed when running the notebook in external environment.
 - `source_prefix`: Path prefix to the notebooks on github (for generating download links)
    Default: "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples".
 - `iframe_height`: Height of the iframe generated. Default: "500px".
@@ -107,6 +109,7 @@ function docplutonotebooks(example_dir, notebooklist;
                            source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples",
                            iframe_height = "500px",
                            distributed = true,
+                           append_build_context = true,
                            pluto_project = Base.active_project())
     startroot!(pwd())
     thisdir=pwd()
@@ -127,7 +130,8 @@ function docplutonotebooks(example_dir, notebooklist;
                 error("Please have Pluto in the environment and import/use PlutoStaticHTML.jl in order to use docplutonotebooks with `iframe=false`")
             end
         end
-        mdpaths = docplutostatichtml(example_dir, notebooks; distributed, pluto_project)
+        @show distributed
+        mdpaths = docplutostatichtml(example_dir, notebooks;append_build_context, distributed, pluto_project)
     end
     cd(thisdir)
     Pair.(first.(notebooklist), mdpaths)
