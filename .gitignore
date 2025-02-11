@@ -1,4 +1,3 @@
-.repl_history
-Manifest.toml
+Manifest*.toml
 docs/build
 QUARRY
