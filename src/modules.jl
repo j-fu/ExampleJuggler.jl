@@ -124,9 +124,9 @@ if it is defined in this module, passing `kwargs...`.
 """
 macro testmodule(source, kwargs...)
     esc(:(mod = include($source);
-          if isdefined(mod, :runtests)
+          if Base.invokelatest(isdefined, mod, :runtests)
               ExampleJuggler.verbose() && @info "testing " * basename($(source))
-              Base.invokelatest(getproperty(mod, :runtests); $(kwargs...))
+          Base.invokelatest(Base.invokelatest(getproperty, mod, :runtests); $(kwargs...))
           end))
 end
 

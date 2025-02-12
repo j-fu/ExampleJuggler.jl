@@ -9,8 +9,8 @@ test correctness.
 macro testscript(source, kwargs...)
     esc(:(ExampleJuggler.verbose() && @info "testing " * basename($(source));
           mod = eval(ExampleJuggler.parsescript($(source)));
-          if isdefined(mod, :runtests)
-              Base.invokelatest(getproperty(mod, :runtests); $(kwargs...))
+          if Base.invokelatest(isdefined, mod, :runtests)
+              Base.invokelatest(Base.invokelatest(getproperty, mod, :runtests); $(kwargs...))
           end))
 end
 

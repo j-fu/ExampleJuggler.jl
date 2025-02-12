@@ -10,5 +10,4 @@ PkgDependency = "9eb5382b-762c-48ca-8139-e736883fe800"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
-CairoMakie = "0.10.12"
 Aqua = "0.8"
