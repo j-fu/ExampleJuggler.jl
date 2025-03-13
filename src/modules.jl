@@ -70,10 +70,15 @@ via [Literate.jl](https://github.com/fredrikekre/Literate.jl) in form of modules
 Keyword arguments:
 
 - `use_module_titles`: use titles from module input files
+- `use_script_titles`: use titles from script input files
 
 See [ExampleModule.jl](@ref) for an example.
 """
-function docmodules(example_dir, modules; use_module_titles=false, x_examples = module_examples, force=true, kwargs...)
+function docmodules(example_dir, modules;
+                    use_module_titles=false,
+                    use_script_titles=false,
+                    x_examples = module_examples,
+                    force=true, kwargs...)
     startroot!(pwd())
     thisdir=pwd()
     md_dir = example_md_dir(x_examples)
@@ -98,7 +103,7 @@ function docmodules(example_dir, modules; use_module_titles=false, x_examples = 
         push!(example_md, joinpath(x_examples, splitext(basename(example_source))[1] * ".md"))
     end
     cd(thisdir)
-    if use_module_titles
+    if use_module_titles || use_script_titles
         example_md
     else
         Pair.(first.(modulelist), example_md)
@@ -108,8 +113,20 @@ end
 """
     @docmodules(example_dir, modules, kwargs...)
 
-Generate markdown files and plots for use with documenter from list of Julia modules.
-Wrapper macro for [`docmodules`](@ref).
+Generate markdown files and plots (via the respective `generateplots` methods) 
+for use with documenter from list of Julia modules.
+Wrapper macro for [`docmodules`](@ref) and [`ExampleJuggler.@plotmodules`](@ref).
+
+Parameters:
+- `example_dir`: subdirectory where the files coresponding to the modules reside. 
+- `modules`: Vector of file names or pairs `"title" => "filename"` as in  
+   [Documenter.jl](https://documenter.juliadocs.org/stable/man/guide/#Pages-in-the-Sidebar).
+
+Keyword arguments:
+
+- `use_module_titles`: use titles from module input files
+- other `kwargs` are passed to the optional `generateplots` method in the module. 
+
 """
 macro docmodules(example_dir, modules, kwargs...)
     esc(:(ExampleJuggler.@plotmodules($example_dir, $modules, $(kwargs...));
@@ -118,7 +135,7 @@ macro docmodules(example_dir, modules, kwargs...)
 end
 
 """
-    @testmodule
+    @testmodule(source, kwargs...)
 Include script defining a module in the context of the calling module and call the `runtests` method
 if it is defined in this module, passing `kwargs...`.
 """

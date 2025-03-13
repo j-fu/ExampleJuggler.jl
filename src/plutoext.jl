@@ -42,11 +42,16 @@ Parameters:
 - `notebooks`: vector of pathnames of notebooks to be tested.
 
 Keyword arguments:
-- `pluto_project`: if not `nothing`, this is passed via `ENV["PLUTO_PROJECT"]` to the notebooks with the
-  possibility to activate it. By default it has the value of `Base.active_project()` which in practice 
+- `pluto_project`: if not `nothing`, this is passed via `ENV["PLUTO_PROJECT"]` to the notebooks.
+  By default it has the value of `Base.active_project()` which in practice 
   is the environment `runtests.jl` is running in. 
   As a consequence, if this default is kept, it is necessary to have all package dependencies of the
   notebooks in the package environment.
+  In a notebook  it can be activated like:
+```
+    import Pkg as _Pkg
+    haskey(ENV, "PLUTO_PROJECT") && _Pkg.activate(ENV["PLUTO_PROJECT"])
+```
 
 
 """
