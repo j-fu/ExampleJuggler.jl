@@ -1,7 +1,7 @@
 """
     ExampleJuggler
 
-$(read(joinpath(@__DIR__,"..","README.md"),String))
+$(read(joinpath(@__DIR__, "..", "README.md"), String))
 """
 module ExampleJuggler
 import Literate
@@ -11,7 +11,7 @@ using DocStringExtensions: SIGNATURES
 using UUIDs: uuid1
 using Compat: @compat
 
-if  !isdefined(Base, :get_extension)
+if !isdefined(Base, :get_extension)
     using Requires
 end
 
@@ -31,15 +31,15 @@ include("plutoext.jl")
 export testplutonotebooks, @testplutonotebooks, docplutonotebooks, @docplutonotebooks
 
 
-@static if  !isdefined(Base, :get_extension)
+@static if !isdefined(Base, :get_extension)
     function __init__()
-        @require Pluto =  "c3e4b0f8-55cb-11ea-2926-15256bba5781"  begin
+        @require Pluto = "c3e4b0f8-55cb-11ea-2926-15256bba5781"  begin
             include("../ext/ExampleJugglerPlutoExt.jl")
         end
         @require PlutoStaticHTML = "359b1769-a58e-495b-9770-312e911026ad"  begin
             include("../ext/ExampleJugglerPlutoStaticHTMLExt.jl")
         end
-        @require PlutoSliderServer =  "2fc8631c-6f24-4c5b-bca7-cbb509c42db4"  begin
+        @require PlutoSliderServer = "2fc8631c-6f24-4c5b-bca7-cbb509c42db4"  begin
             include("../ext/ExampleJugglerPlutoSliderServerExt.jl")
         end
     end

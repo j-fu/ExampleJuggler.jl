@@ -13,7 +13,7 @@ function replace_source_url(input, source_url)
     return String(take!(lines_out))
 end
 
- 
+
 """
 $(SIGNATURES)
 
@@ -22,9 +22,9 @@ Used for postprocessing the output of `Literate.markdown` in [`ExampleJuggler.do
 """
 function replace_atat(input)
     lines_in = collect(eachline(IOBuffer(input)))
-    lines_out=IOBuffer()
+    lines_out = IOBuffer()
     for line in lines_in
-        println(lines_out,replace(line,"@@" => "@"))
+        println(lines_out, replace(line, "@@" => "@"))
     end
     return String(take!(lines_out))
 end
@@ -36,12 +36,18 @@ end
 Include module into context of calling module and execute `generateplots(;kwargs...)` if it exists.
 """
 macro plotmodule(source, kwargs...)
-    esc(:(mod = include($source);
-          if isdefined(mod, :generateplots)
-              ExampleJuggler.verbose() && @info "generating plots for " * normpath($(source))
-              Base.invokelatest(getproperty(mod, :generateplots), ExampleJuggler.example_md_dir(ExampleJuggler.module_examples);
-                                $(kwargs...))
-          end))
+    return esc(
+        :(
+            mod = include($source);
+            if isdefined(mod, :generateplots)
+                ExampleJuggler.verbose() && @info "generating plots for " * normpath($(source))
+                Base.invokelatest(
+                    getproperty(mod, :generateplots), ExampleJuggler.example_md_dir(ExampleJuggler.module_examples);
+                    $(kwargs...)
+                )
+            end
+        )
+    )
 end
 
 """
@@ -50,7 +56,8 @@ end
 Plot several scripts defining modules via [`@plotmodule`](@ref).
 """
 macro plotmodules(example_dir, modules, kwargs...)
-    esc(quote
+    return esc(
+        quote
             sources = last.(ExampleJuggler.homogenize_notebooklist($(modules)))
             for source in sources
                 base, ext = splitext(source)
@@ -58,7 +65,8 @@ macro plotmodules(example_dir, modules, kwargs...)
                     ExampleJuggler.@plotmodule(joinpath($example_dir, source), $(kwargs...))
                 end
             end
-        end)
+        end
+    )
 end
 
 """
@@ -74,13 +82,15 @@ Keyword arguments:
 
 See [ExampleModule.jl](@ref) for an example.
 """
-function docmodules(example_dir, modules;
-                    use_module_titles=false,
-                    use_script_titles=false,
-                    x_examples = module_examples,
-                    force=true, kwargs...)
+function docmodules(
+        example_dir, modules;
+        use_module_titles = false,
+        use_script_titles = false,
+        x_examples = module_examples,
+        force = true, kwargs...
+    )
     startroot!(pwd())
-    thisdir=pwd()
+    thisdir = pwd()
     md_dir = example_md_dir(x_examples)
     modulelist = homogenize_notebooklist(modules)
     modules = last.(modulelist)
@@ -89,21 +99,22 @@ function docmodules(example_dir, modules;
     for example_source in example_sources
         example_base, ext = splitext(example_source)
         if ext == ".jl"
-            cp(example_source, joinpath(example_md_dir(x_examples), basename(example_source));force)
-            Literate.markdown(example_source,
-                              md_dir;
-                              documenter = false,
-                              info = verbose(),
-                              preprocess = buffer -> replace_source_url(buffer, basename(example_source)),
-                              postprocess=replace_atat
-                              )
+            cp(example_source, joinpath(example_md_dir(x_examples), basename(example_source)); force)
+            Literate.markdown(
+                example_source,
+                md_dir;
+                documenter = false,
+                info = verbose(),
+                preprocess = buffer -> replace_source_url(buffer, basename(example_source)),
+                postprocess = replace_atat
+            )
         else
             @warn "$(example_source) appears to be not a Julia file, skipping"
         end
         push!(example_md, joinpath(x_examples, splitext(basename(example_source))[1] * ".md"))
     end
     cd(thisdir)
-    if use_module_titles || use_script_titles
+    return if use_module_titles || use_script_titles
         example_md
     else
         Pair.(first.(modulelist), example_md)
@@ -129,9 +140,15 @@ Keyword arguments:
 
 """
 macro docmodules(example_dir, modules, kwargs...)
-    esc(:(ExampleJuggler.@plotmodules($example_dir, $modules, $(kwargs...));
-          ExampleJuggler.docmodules($example_dir, $modules;
-                                    $(kwargs...))))
+    return esc(
+        :(
+            ExampleJuggler.@plotmodules($example_dir, $modules, $(kwargs...));
+            ExampleJuggler.docmodules(
+                $example_dir, $modules;
+                $(kwargs...)
+            )
+        )
+    )
 end
 
 """
@@ -140,11 +157,15 @@ Include script defining a module in the context of the calling module and call t
 if it is defined in this module, passing `kwargs...`.
 """
 macro testmodule(source, kwargs...)
-    esc(:(mod = include($source);
-          if Base.invokelatest(isdefined, mod, :runtests)
-              ExampleJuggler.verbose() && @info "testing " * basename($(source))
-          Base.invokelatest(Base.invokelatest(getproperty, mod, :runtests); $(kwargs...))
-          end))
+    return esc(
+        :(
+            mod = include($source);
+            if Base.invokelatest(isdefined, mod, :runtests)
+                ExampleJuggler.verbose() && @info "testing " * basename($(source))
+                Base.invokelatest(Base.invokelatest(getproperty, mod, :runtests); $(kwargs...))
+            end
+        )
+    )
 end
 
 """
@@ -153,9 +174,11 @@ end
 Test several scripts defining modules via [`@testmodule`](@ref).
 """
 macro testmodules(example_dir, sources, kwargs...)
-    esc(quote
+    return esc(
+        quote
             for source in $(sources)
                 ExampleJuggler.@testmodule(joinpath($(example_dir), source), $(kwargs...))
             end
-        end)
+        end
+    )
 end

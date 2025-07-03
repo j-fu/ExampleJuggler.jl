@@ -6,9 +6,10 @@ using PlutoStaticHTML: OutputOptions, documenter_output, BuildOptions, build_not
 isdefined(Base, :get_extension) ? import PlutoStaticHTML : import ..PlutoStaticHTML
 
 
-
-function docplutostatichtml(example_dir, notebooks; append_build_context = true,
-                            distributed=true, force=true, pluto_project = Base.active_project())
+function docplutostatichtml(
+        example_dir, notebooks; append_build_context = true,
+        distributed = true, force = true, pluto_project = Base.active_project()
+    )
     project = Base.active_project()
     if pluto_project != nothing
         Pkg.activate(pluto_project)
@@ -30,10 +31,10 @@ function docplutostatichtml(example_dir, notebooks; append_build_context = true,
     @show distributed
     build_notebooks(bopts, notebooks, oopts; session)
     for nb in notebookmd
-        mv(joinpath(example_dir, nb), joinpath(example_md_dir(plutostatichtml_examples), nb);force)
+        mv(joinpath(example_dir, nb), joinpath(example_md_dir(plutostatichtml_examples), nb); force)
     end
     Pkg.activate(project)
-    joinpath.(plutostatichtml_examples, notebookmd)
+    return joinpath.(plutostatichtml_examples, notebookmd)
 end
 
 

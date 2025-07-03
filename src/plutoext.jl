@@ -25,7 +25,6 @@ Implemented in extension `ExampleJugglerPlutoExt`.
 function testplutonotebook end
 
 
-
 """
      testplutonotebooks(example_dir, notebooks; kwargs...)
 
@@ -56,8 +55,8 @@ Keyword arguments:
 
 """
 function testplutonotebooks(example_dir, notebooks; kwargs...)
-    if isdefined(Base,:get_extension)
-        ext=Base.get_extension(ExampleJuggler,:ExampleJugglerPlutoExt)
+    if isdefined(Base, :get_extension)
+        ext = Base.get_extension(ExampleJuggler, :ExampleJugglerPlutoExt)
         if isnothing(ext)
             error("Please import/use Pluto.jl in order to use testplutonotebooks()")
         end
@@ -65,6 +64,7 @@ function testplutonotebooks(example_dir, notebooks; kwargs...)
     for notebook in notebooks
         testplutonotebook(joinpath(example_dir, notebook); kwargs...)
     end
+    return
 end
 
 
@@ -75,7 +75,7 @@ Macro wrapper for [`testplutonotebooks`](@ref).
 Just for aestethic reasons, as other parts of the API have to be macros.
 """
 macro testplutonotebooks(example_dir, notebooks, kwargs...)
-    esc(:(ExampleJuggler.testplutonotebooks($example_dir, $notebooks; $(kwargs...))))
+    return esc(:(ExampleJuggler.testplutonotebooks($example_dir, $notebooks; $(kwargs...))))
 end
 
 
@@ -109,37 +109,39 @@ Return value: Vector of pairs of pathnames and strings pointing to generated mar
 `Documenter.makedocs()`
 
 """
-function docplutonotebooks(example_dir, notebooklist;
-                           iframe = false,
-                           source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples",
-                           iframe_height = "500px",
-                           distributed = true,
-                           append_build_context = true,
-                           pluto_project = Base.active_project())
+function docplutonotebooks(
+        example_dir, notebooklist;
+        iframe = false,
+        source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples",
+        iframe_height = "500px",
+        distributed = true,
+        append_build_context = true,
+        pluto_project = Base.active_project()
+    )
     startroot!(pwd())
-    thisdir=pwd()
+    thisdir = pwd()
     notebooklist = homogenize_notebooklist(notebooklist)
     notebooks = last.(notebooklist)
     if iframe
-        if isdefined(Base,:get_extension)
-            ext=Base.get_extension(ExampleJuggler,:ExampleJugglerPlutoSliderServerExt)
+        if isdefined(Base, :get_extension)
+            ext = Base.get_extension(ExampleJuggler, :ExampleJugglerPlutoSliderServerExt)
             if isnothing(ext)
                 error("Please import/use PlutoSliderServer.jl in order to use docplutonotebooks with `iframe=true`")
             end
         end
         mdpaths = docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height)
     else
-        if isdefined(Base,:get_extension)
-            ext=Base.get_extension(ExampleJuggler,:ExampleJugglerPlutoStaticHTMLExt)
+        if isdefined(Base, :get_extension)
+            ext = Base.get_extension(ExampleJuggler, :ExampleJugglerPlutoStaticHTMLExt)
             if isnothing(ext)
                 error("Please have Pluto in the environment and import/use PlutoStaticHTML.jl in order to use docplutonotebooks with `iframe=false`")
             end
         end
         @show distributed
-        mdpaths = docplutostatichtml(example_dir, notebooks;append_build_context, distributed, pluto_project)
+        mdpaths = docplutostatichtml(example_dir, notebooks; append_build_context, distributed, pluto_project)
     end
     cd(thisdir)
-    Pair.(first.(notebooklist), mdpaths)
+    return Pair.(first.(notebooklist), mdpaths)
 end
 
 """
@@ -149,8 +151,5 @@ Macro wrapper for [`docplutonotebooks`](@ref).
 Just for aestethic reasons, as other parts of the API have to be macros.
 """
 macro docplutonotebooks(example_dir, notebooklist, kwargs...)
-    esc(:(docplutonotebooks($example_dir, $notebooklist; $(kwargs...))))
+    return esc(:(docplutonotebooks($example_dir, $notebooklist; $(kwargs...))))
 end
-
-
-

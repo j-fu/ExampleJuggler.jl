@@ -24,7 +24,7 @@ function testplutonotebook(notebookname; pluto_project = Base.active_project())
     wd = pwd()
     t = @elapsed notebook = Pluto.SessionActions.open(session, notebookname; run_async = false)
     if verbose()
-        @info "notebook executed in $(round(t,sigdigits=4)) seconds"
+        @info "notebook executed in $(round(t, sigdigits = 4)) seconds"
     end
     cd(wd)
 
@@ -39,10 +39,8 @@ function testplutonotebook(notebookname; pluto_project = Base.active_project())
         end
     end
     ENV["PLUTO_PROJECT"] = nothing
-    !errored
+    return !errored
 end
-
-
 
 
 end
