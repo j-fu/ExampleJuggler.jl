@@ -13,7 +13,7 @@ end
     Aqua.test_unbound_args(ExampleJuggler)
     Aqua.test_undefined_exports(ExampleJuggler)
     Aqua.test_project_extras(ExampleJuggler)
-    Aqua.test_stale_deps(ExampleJuggler, ignore = [:Requires])
+    Aqua.test_stale_deps(ExampleJuggler, ignore = [:ChunkSplitters])
     Aqua.test_deps_compat(ExampleJuggler)
     Aqua.test_piracies(ExampleJuggler)
     Aqua.test_persistent_tasks(ExampleJuggler)

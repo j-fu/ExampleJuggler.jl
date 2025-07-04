@@ -1,23 +1,60 @@
 """
-    docplutostatichtml(example_dir, notebooks; pluto_project, ntasks)
+    docplutostatichtml(example_dir, notebooks;
+                       pluto_project = nothing, 
+                       ntasks = Threads.nthreads())
+
 
 Document notebooks via  [PlutoStaticHTML.jl](https://github.com/rikhuijzer/PlutoStaticHTML.jl).
 Implemented in extension `ExampleJugglerPlutoStaticHTMLExt`.
+
+Parameters:
+- `example_dir`: Directory where notebooks reside.
+- `notebooks`: Vector of notebook file names relative to `example_dir`.
+
+Keyword arguments:
+- `pluto_project`: passed as `ENV[PLUTO_PROJECT]` to notebooks. See [`testplutonotebooks`](@ref) for explanation.
+- `ntasks`: number of parallel tasks.
+
+Returns: Vector of markdown file names (one for each notebook) ready to be passed to `makedocs`.
+
 """
 function docplutostatichtml end
 
 
 """
-    docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height, force, ntasks)
+    docplutosliderserver(example_dir, notebooks; 
+                         pluto_project = nothing, 
+                         ntasks = Threads.nthreads(),
+                         source_prefix = "",
+                         iframe_height = "500px",
+                         force = true)
 
 Document notebooks via  [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl)
-Implemented in extension `ExampleJugglerPlutoSliderServerExt`.
+Implemented in extension `ExampleJugglerPlutoSliderServerExt`. Rendered 
+notebooks will appear in iframes.
+
+Parameters:
+- `example_dir`: Directory where notebooks reside
+- `notebooks`: Vector of notebook file names relative to `example_dir`
+
+Keyword arguments:
+- `pluto_project`: passed as `ENV[PLUTO_PROJECT]` to notebooks.  See [`testplutonotebooks`](@ref) for explanation.
+- `ntasks`: number of parallel tasks.
+- `source_prefix`: Prefix of notebook source file on github.
+- `iframe_height`: Height of iframe.
+- `force`: force ovewriting of already rendered notebooks.
+
+
+Returns: Vector of markdown file names (one for each notebook) ready to be passed to `makedocs`.
+
+
 """
 function docplutosliderserver end
 
 
 """
-    testplutonotebook(notebookname; pluto_project = nothing)
+    testplutonotebook(notebookname; 
+                      pluto_project = nothing)
 
 Test pluto notebook in a Pluto session. Core of [`testplutonotebooks`](@ref).
 Implemented in extension `ExampleJugglerPlutoExt`.
@@ -99,7 +136,8 @@ Keyword arguments:
     - If false, Documenter markdown files are ceated via  [PlutoStaticHTML.jl](https://github.com/rikhuijzer/PlutoStaticHTML.jl). These integrate well with
       Documenter, but are (as of now) unable to show active javascript content. Graphics is best prepared
       with CairoMakie. Prerequisite is `import PlutoStaticHTML` in `docs/make.jl`.
-- `distributed`: Use parallel evaluation when `iframe==false`
+- `distributed`: Use parallel evaluation
+- `ntasks`: Number of parallel tasks
 - `append_build_context`: pass this to [PlutoStaticHTML.OutputOptions](https://plutostatichtml.huijzer.xyz/dev/#PlutoStaticHTML.OutputOptions).
    Possibly needed when running the notebook in external environment.
 - `source_prefix`: Path prefix to the notebooks on github (for generating download links)
@@ -115,6 +153,7 @@ function docplutonotebooks(
         source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples",
         iframe_height = "500px",
         distributed = true,
+        ntasks = Threads.nthreads(),
         append_build_context = true,
         pluto_project = Base.active_project()
     )
@@ -129,7 +168,7 @@ function docplutonotebooks(
                 error("Please import/use PlutoSliderServer.jl in order to use docplutonotebooks with `iframe=true`")
             end
         end
-        mdpaths = docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height)
+        mdpaths = docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height, ntasks)
     else
         if isdefined(Base, :get_extension)
             ext = Base.get_extension(ExampleJuggler, :ExampleJugglerPlutoStaticHTMLExt)
@@ -137,8 +176,7 @@ function docplutonotebooks(
                 error("Please have Pluto in the environment and import/use PlutoStaticHTML.jl in order to use docplutonotebooks with `iframe=false`")
             end
         end
-        @show distributed
-        mdpaths = docplutostatichtml(example_dir, notebooks; append_build_context, distributed, pluto_project)
+        mdpaths = docplutostatichtml(example_dir, notebooks; append_build_context, distributed, pluto_project, ntasks)
     end
     cd(thisdir)
     return Pair.(first.(notebooklist), mdpaths)
