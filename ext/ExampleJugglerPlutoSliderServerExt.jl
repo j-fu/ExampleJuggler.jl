@@ -3,7 +3,7 @@ module ExampleJugglerPlutoSliderServerExt
 using ChunkSplitters: chunks
 import Pkg
 import ExampleJuggler: docplutosliderserver, verbose, example_md_dir, pluto_examples
-isdefined(Base, :get_extension) ? import PlutoSliderServer : import ..PlutoSliderServer
+import PlutoSliderServer
 
 
 function docplutosliderserver(

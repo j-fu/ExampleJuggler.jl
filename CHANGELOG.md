@@ -10,7 +10,9 @@ All notable changes to this project will be documented in this file.
 - Allow parallel execution of notebooks in @docplutosliderserver
   - Use asyncmap and ChunkSplitters.chunks to organize this
   - Add ntasks option to @docplutonotebook (default value is Threads.@nthreads)
-
+- Minimum Julia 1.9 
+  - remove support of Requires
+  
 ## [2.2.0] - 2025-02-12
 
 - More invokelatest statements to satisfy 1.12

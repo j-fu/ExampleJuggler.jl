@@ -3,7 +3,7 @@ module ExampleJugglerPlutoStaticHTMLExt
 import Pkg
 import ExampleJuggler: docplutostatichtml, verbose, example_md_dir, plutostatichtml_examples
 using PlutoStaticHTML: OutputOptions, documenter_output, BuildOptions, build_notebooks
-isdefined(Base, :get_extension) ? import PlutoStaticHTML : import ..PlutoStaticHTML
+import PlutoStaticHTML
 
 
 function docplutostatichtml(

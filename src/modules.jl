@@ -1,5 +1,5 @@
 """
-$(SIGNATURES)
+    replace_source_url(input, source_url)
 
 Replace "@__SOURCE_URL__" marker with url of source.
 Used for preprocessing the input of `Literate.markdown` in [`ExampleJuggler.docmodules`](@ref).
@@ -15,7 +15,7 @@ end
 
 
 """
-$(SIGNATURES)
+     replace_atat(input)
 
 Replace "@@" marker with "@".
 Used for postprocessing the output of `Literate.markdown` in [`ExampleJuggler.docmodules`](@ref).

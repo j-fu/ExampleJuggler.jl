@@ -1,6 +1,5 @@
 module ExampleJugglerPlutoExt
-
-isdefined(Base, :get_extension) ? import Pluto : import ..Pluto
+import Pluto
 
 import ExampleJuggler: testplutonotebook, verbose
 
