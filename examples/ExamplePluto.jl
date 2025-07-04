@@ -41,10 +41,10 @@ let
 end
 
 # ╔═╡ dd736474-3cbf-4b09-8dbb-0ab16fce6c5e
-function runtests()                   
-	# hideall
-    @test isapprox(maximum(fyt), 1.0; rtol = 1.0e-3)	
-	@test isapprox(maximum(fx), 1.0; rtol = 1.0e-3)
+function runtests()
+    # hideall
+    @test isapprox(maximum(fyt), 1.0; rtol = 1.0e-3)
+    return @test isapprox(maximum(fx), 1.0; rtol = 1.0e-3)
 end;
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001

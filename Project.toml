@@ -1,14 +1,12 @@
 name = "ExampleJuggler"
 uuid = "3bbe58f8-ed81-4c4e-a134-03e85fcf4a1a"
 authors = ["Jürgen Fuhrmann <juergen-fuhrmann@web.de>"]
-version = "2.2.1"
+version = "2.3.0"
 
 [deps]
-Compat = "34da2185-b29b-5c13-b0c7-acf172513d20"
-DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
+ChunkSplitters = "ae650224-84b6-46f8-82ea-d812ca08434e"
 Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-Requires = "ae029012-a4dd-5104-9daa-d747884805df"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 UUIDs = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
 
@@ -23,19 +21,34 @@ ExampleJugglerPlutoSliderServerExt = "PlutoSliderServer"
 ExampleJugglerPlutoStaticHTMLExt = "PlutoStaticHTML"
 
 [compat]
-Compat = "4.10"
-DocStringExtensions = "0.8,0.9"
+AbstractTrees = "0.4"
+Aqua = "0.8"
+CairoMakie = "0.12, 0.13, 0.14, 0.15"
+ChunkSplitters = "2,3"
+InteractiveUtils = "1.9"
 Literate = "2"
+Markdown = "1.9"
 Pkg = "1.6"
+PkgDependency = "0.4, 0.5"
 Pluto = "0.19.30, 0.20"
 PlutoSliderServer = "0.3.28, 1"
 PlutoStaticHTML = "6, 7"
-Requires = "1"
-Test = "1.6"
+Test = "1.9"
 UUIDs = "1.6"
-julia = "1.6"
+julia = "1.9"
 
 [extras]
+AbstractTrees = "1520ce14-60c1-5f80-bbc7-55ef81b5835c"
+Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
+CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+Markdown = "d6f4376e-aef5-505a-96c1-9c027394607a"
+Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+PkgDependency = "9eb5382b-762c-48ca-8139-e736883fe800"
 Pluto = "c3e4b0f8-55cb-11ea-2926-15256bba5781"
 PlutoSliderServer = "2fc8631c-6f24-4c5b-bca7-cbb509c42db4"
 PlutoStaticHTML = "359b1769-a58e-495b-9770-312e911026ad"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["AbstractTrees", "Aqua", "CairoMakie", "InteractiveUtils", "Markdown", "Pkg", "PkgDependency", "Test", "Pluto"]

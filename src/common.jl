@@ -10,7 +10,7 @@ Set verbosity
 function verbose!(v::Bool)
     global verbosity
     verbosity = v
-    startroot!(pwd())
+    return startroot!(pwd())
 end
 
 const script_examples = "script_examples"
@@ -19,7 +19,7 @@ const pluto_examples = "pluto_examples"
 const plutostatichtml_examples = "plutostatichtml_examples"
 const all_examples = [module_examples, pluto_examples, plutostatichtml_examples, script_examples]
 
-startroot=""
+startroot = ""
 """
     startroot!(dir)
 
@@ -28,11 +28,11 @@ Assume `dir` is the directory from which `make.jl` has been invoked
 """
 function startroot!(dir)
     global startroot
-    if startroot==""
+    return if startroot == ""
         if verbose()
             @info "Set startroot=$dir"
         end
-        startroot=dir
+        startroot = dir
     end
 end
 
@@ -51,6 +51,7 @@ function cleanexamples()
         end
         rm(md_dir; recursive = true, force = true)
     end
+    return
 end
 
 export cleanexamples
@@ -64,15 +65,15 @@ Creates the directory if it doesn't already exist.
 """
 function example_md_dir(subdir)
     if basename(startroot) == "docs" # run from docs subdirectory, e.g, during developkment
-        docsdir=startroot
+        docsdir = startroot
     else # standard case with github ci
-        docsdir=joinpath(startroot, "docs")
+        docsdir = joinpath(startroot, "docs")
     end
-    
-    if !isfile(joinpath(docsdir,"make.jl"))
+
+    if !isfile(joinpath(docsdir, "make.jl"))
         error("no make.jl found in $docsdir")
     end
-    return mkpath(joinpath(docsdir,"src", subdir))
+    return mkpath(joinpath(docsdir, "src", subdir))
 end
 
 homogenize_entry(p::Pair) = p
