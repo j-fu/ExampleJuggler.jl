@@ -38,7 +38,7 @@ function main(; Plotter = nothing)
         Plotter.display(p)
     end
     @show maximum(fxt)
-    maximum(fx), maximum(fxt)
+    return maximum(fx), maximum(fxt)
 end
 
 function generateplots(dir; Plotter = nothing)                    #hide
@@ -51,14 +51,14 @@ function generateplots(dir; Plotter = nothing)                    #hide
         p = Plotter.heatmap(x, t, fxt)                       #hide
         Plotter.save(joinpath(dir, "mock_xt.svg"), p)        #hide
     end                                                      #hide
-    nothing                                                  #hide
+    return nothing                                                  #hide
 end                                                          #hide
 #hide
 function runtests(; a = 1)                                              #hide
     @info a                                                  #hide
     maxfx, maxfxt = main()                                   #hide
     @test isapprox(maxfx, 1.0; rtol = 1.0e-3)                #hide
-    @test isapprox(maxfxt, 1.0; rtol = 1.0e-3)               #hide
+    return @test isapprox(maxfxt, 1.0; rtol = 1.0e-3)               #hide
 end                                                          #hide
 
 end

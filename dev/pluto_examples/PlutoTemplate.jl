@@ -8,7 +8,7 @@ using InteractiveUtils
 begin
     import Pkg as _Pkg
     haskey(ENV, "PLUTO_PROJECT") && _Pkg.activate(ENV["PLUTO_PROJECT"])
-	# using Revise
+    # using Revise
     using ExampleJuggler
     using Test
     Base.active_project()
@@ -20,7 +20,7 @@ md"""
 """
 
 # ╔═╡ 3eef08af-f6ba-4874-82c0-65ff53e7f7da
-@test 1+1==2
+@test 1 + 1 == 2
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
