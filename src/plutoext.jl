@@ -1,5 +1,5 @@
 """
-    docplutostatichtml(example_dir, notebooks; pluto_project)
+    docplutostatichtml(example_dir, notebooks; pluto_project, ntasks)
 
 Document notebooks via  [PlutoStaticHTML.jl](https://github.com/rikhuijzer/PlutoStaticHTML.jl).
 Implemented in extension `ExampleJugglerPlutoStaticHTMLExt`.
@@ -8,7 +8,7 @@ function docplutostatichtml end
 
 
 """
-    docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height, force)
+    docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height, force, ntasks)
 
 Document notebooks via  [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl)
 Implemented in extension `ExampleJugglerPlutoSliderServerExt`.

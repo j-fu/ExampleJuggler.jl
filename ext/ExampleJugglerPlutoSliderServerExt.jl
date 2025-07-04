@@ -1,15 +1,18 @@
 module ExampleJugglerPlutoSliderServerExt
 
+using ChunkSplitters: chunks
 import Pkg
 import ExampleJuggler: docplutosliderserver, verbose, example_md_dir, pluto_examples
 isdefined(Base, :get_extension) ? import PlutoSliderServer : import ..PlutoSliderServer
+
 
 function docplutosliderserver(
         example_dir, notebooks;
         source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples",
         iframe_height = "500px",
         force = true,
-        pluto_project = Base.active_project()
+        pluto_project = Base.active_project(),
+        ntasks = Threads.nthreads(),
     )
     if pluto_project != nothing
         Pkg.activate(pluto_project)
@@ -20,12 +23,23 @@ function docplutosliderserver(
     if verbose()
         @info "notebook output to $(normpath(Export_output_dir))"
     end
-    PlutoSliderServer.export_directory(
-        example_dir;
-        notebook_paths = notebooks,
-        Export_output_dir,
-        Export_offer_binder = false
-    )
+    if ntasks < 2
+        PlutoSliderServer.export_directory(
+            example_dir;
+            notebook_paths = notebooks,
+            Export_output_dir,
+            Export_offer_binder = false
+        )
+    else
+        asyncmap(chunks(notebooks; n = ntasks); ntasks) do chunk
+            PlutoSliderServer.export_directory(
+                example_dir;
+                notebook_paths = collect(chunk),
+                Export_output_dir,
+                Export_offer_binder = false
+            )
+        end
+    end
     example_md = String[]
 
     for notebook in notebooks
