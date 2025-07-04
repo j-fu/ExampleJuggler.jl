@@ -1,7 +1,7 @@
 name = "ExampleJuggler"
 uuid = "3bbe58f8-ed81-4c4e-a134-03e85fcf4a1a"
 authors = ["Jürgen Fuhrmann <juergen-fuhrmann@web.de>"]
-version = "2.2.1"
+version = "2.3.0"
 
 [deps]
 ChunkSplitters = "ae650224-84b6-46f8-82ea-d812ca08434e"
@@ -55,4 +55,4 @@ PlutoStaticHTML = "359b1769-a58e-495b-9770-312e911026ad"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["AbstractTrees", "Aqua", "CairoMakie", "InteractiveUtils", "Markdown", "Pkg", "PkgDependency", "Test"]
+test = ["AbstractTrees", "Aqua", "CairoMakie", "InteractiveUtils", "Markdown", "Pkg", "PkgDependency", "Test", "Pluto"]

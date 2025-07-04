@@ -137,7 +137,7 @@ Keyword arguments:
       Documenter, but are (as of now) unable to show active javascript content. Graphics is best prepared
       with CairoMakie. Prerequisite is `import PlutoStaticHTML` in `docs/make.jl`.
 - `distributed`: Use parallel evaluation
-- `ntasks`: Number of parallel tasks
+- `ntasks` (default: `Threads.nthreads()`: Number of parallel tasks
 - `append_build_context`: pass this to [PlutoStaticHTML.OutputOptions](https://plutostatichtml.huijzer.xyz/dev/#PlutoStaticHTML.OutputOptions).
    Possibly needed when running the notebook in external environment.
 - `source_prefix`: Path prefix to the notebooks on github (for generating download links)

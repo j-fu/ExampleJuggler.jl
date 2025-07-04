@@ -2,14 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [2.3.0] - 2025-07-04
 
 - Update notebook environments
 - Improve documentation
 - Runic formatting
 - Allow parallel execution of notebooks in @docplutosliderserver
-  Use asyncmap and ChunkSplitters.chunks to organize this
-- Add ntasks option to @docplutonotebook
+  - Use asyncmap and ChunkSplitters.chunks to organize this
+  - Add ntasks option to @docplutonotebook (default value is Threads.@nthreads)
 
 ## [2.2.0] - 2025-02-12
 

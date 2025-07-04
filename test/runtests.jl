@@ -29,7 +29,7 @@ notebooks = ["PlutoTemplate.jl", "ExamplePluto.jl"]
 scripts = ["ExampleScript.jl"]
 
 # This kind of test needs `import Pluto`
-# and has been temporarily disabled due to https://github.com/fonsp/Pluto.jl/issues/2810
+# and has been temporarily disabled due to lacking support on Julia nightly
 # @testset "pluto notebooks" begin
 #    @testplutonotebooks(example_dir, notebooks)
 # end
