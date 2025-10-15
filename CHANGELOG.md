@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.1]
+
+ - use `invokelatest` in `plotmodule` to be in line with strict world age semantics from Julia 1.12 (see [Julia#58511](github.com/JuliaLang/julia/issues/58511))
+
 ## [2.3.0] - 2025-07-04
 
 - Update notebook environments
