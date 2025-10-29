@@ -7,7 +7,7 @@ import PlutoSliderServer
 
 
 function docplutosliderserver(
-        example_dir, notebooks;
+        example_dir::String, notebooks;
         source_prefix = "https://github.com/j-fu/ExampleJuggler.jl/blob/main/examples",
         iframe_height = "500px",
         force = true,

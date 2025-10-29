@@ -5,7 +5,7 @@ import ExampleJuggler: testplutonotebook, verbose
 
 using Test
 
-function testplutonotebook(notebookname; pluto_project = Base.active_project())
+function testplutonotebook(notebookname::String; pluto_project = Base.active_project())
     if verbose()
         @info "running notebook $(basename(notebookname))"
     end

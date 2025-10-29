@@ -18,7 +18,9 @@ Keyword arguments:
 Returns: Vector of markdown file names (one for each notebook) ready to be passed to `makedocs`.
 
 """
-function docplutostatichtml end
+function docplutostatichtml(args...; kwargs...)
+    error("Please have Pluto in the environment and import/use PlutoStaticHTML.jl in order to use docplutonotebooks with `iframe=false`")
+end
 
 
 """
@@ -49,7 +51,9 @@ Returns: Vector of markdown file names (one for each notebook) ready to be passe
 
 
 """
-function docplutosliderserver end
+function docplutosliderserver(args...; kwargs...)
+    error("Please import/use PlutoSliderServer.jl in order to use docplutonotebooks with `iframe=true`")
+end
 
 
 """
@@ -59,7 +63,9 @@ function docplutosliderserver end
 Test pluto notebook in a Pluto session. Core of [`testplutonotebooks`](@ref).
 Implemented in extension `ExampleJugglerPlutoExt`.
 """
-function testplutonotebook end
+function testplutonotebook(args...; kwargs...)
+    error("Please import/use Pluto.jl in order to use testplutonotebooks()")
+end
 
 
 """
@@ -92,12 +98,6 @@ Keyword arguments:
 
 """
 function testplutonotebooks(example_dir, notebooks; kwargs...)
-    if isdefined(Base, :get_extension)
-        ext = Base.get_extension(ExampleJuggler, :ExampleJugglerPlutoExt)
-        if isnothing(ext)
-            error("Please import/use Pluto.jl in order to use testplutonotebooks()")
-        end
-    end
     for notebook in notebooks
         testplutonotebook(joinpath(example_dir, notebook); kwargs...)
     end
@@ -162,20 +162,8 @@ function docplutonotebooks(
     notebooklist = homogenize_notebooklist(notebooklist)
     notebooks = last.(notebooklist)
     if iframe
-        if isdefined(Base, :get_extension)
-            ext = Base.get_extension(ExampleJuggler, :ExampleJugglerPlutoSliderServerExt)
-            if isnothing(ext)
-                error("Please import/use PlutoSliderServer.jl in order to use docplutonotebooks with `iframe=true`")
-            end
-        end
         mdpaths = docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height, ntasks)
     else
-        if isdefined(Base, :get_extension)
-            ext = Base.get_extension(ExampleJuggler, :ExampleJugglerPlutoStaticHTMLExt)
-            if isnothing(ext)
-                error("Please have Pluto in the environment and import/use PlutoStaticHTML.jl in order to use docplutonotebooks with `iframe=false`")
-            end
-        end
         mdpaths = docplutostatichtml(example_dir, notebooks; append_build_context, distributed, pluto_project, ntasks)
     end
     cd(thisdir)
