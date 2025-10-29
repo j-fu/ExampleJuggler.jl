@@ -39,10 +39,11 @@ macro plotmodule(source, kwargs...)
     return esc(
         :(
             mod = include($source);
-            if isdefined(mod, :generateplots)
+            if  Base.invokelatest(isdefined, mod, :generateplots)
                 ExampleJuggler.verbose() && @info "generating plots for " * normpath($(source))
                 Base.invokelatest(
-                    getproperty(mod, :generateplots), ExampleJuggler.example_md_dir(ExampleJuggler.module_examples);
+                    Base.invokelatest(getproperty, mod, :generateplots),
+                    ExampleJuggler.example_md_dir(ExampleJuggler.module_examples);
                     $(kwargs...)
                 )
             end
