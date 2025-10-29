@@ -9,10 +9,15 @@ It is assumed that the script uses `Test.@test` to test correctness.
 macro testscript(source, kwargs...)
     return esc(
         :(
-            ExampleJuggler.verbose() && @info "testing " * basename($(source));
-            mod = eval(ExampleJuggler.parsescript($(source)));
-            if Base.invokelatest(isdefined, mod, :runtests)
-                Base.invokelatest(Base.invokelatest(getproperty, mod, :runtests); $(kwargs...))
+            ExampleJuggler.verbose() && @info "Testing " * basename($(source));
+            try
+                mod = eval(ExampleJuggler.parsescript($(source)));
+                if Base.invokelatest(isdefined, mod, :runtests)
+                    Base.invokelatest(Base.invokelatest(getproperty, mod, :runtests); $(kwargs...))
+                end
+            catch err
+                @error  "Error in $(source): $(err)"
+                rethrow(err)
             end
         )
     )
@@ -31,8 +36,11 @@ randmod() = "mod" * string(uuid1())[1:8]
 
 Read script source, wrap it into a module with random name and return this module.
 """
-parsescript(source) = Meta.parse("module " * ExampleJuggler.randmod() * "\n\n" * read(source, String) * "\n\nend")
-
+function parsescript(source)
+    modname=ExampleJuggler.randmod()
+    mod = Meta.parse("module " * modname* "\n\n" * read(source, String) * "\n\nend")
+    return mod
+end
 """
     @testscripts(example_dir, scripts, kwargs...)
     
