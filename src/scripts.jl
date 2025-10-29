@@ -11,7 +11,7 @@ macro testscript(source, kwargs...)
         :(
             ExampleJuggler.verbose() && @info "Testing " * basename($(source));
             try
-                mod = eval(ExampleJuggler.parsescript($(source)));
+                mod = eval(ExampleJuggler.parsescript($(source)))
                 if Base.invokelatest(isdefined, mod, :runtests)
                     Base.invokelatest(Base.invokelatest(getproperty, mod, :runtests); $(kwargs...))
                 end
@@ -37,8 +37,8 @@ randmod() = "mod" * string(uuid1())[1:8]
 Read script source, wrap it into a module with random name and return this module.
 """
 function parsescript(source)
-    modname=ExampleJuggler.randmod()
-    mod = Meta.parse("module " * modname* "\n\n" * read(source, String) * "\n\nend")
+    modname = ExampleJuggler.randmod()
+    mod = Meta.parse("module " * modname * "\n\n" * read(source, String) * "\n\nend")
     return mod
 end
 """
