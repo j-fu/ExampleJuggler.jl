@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.3.1]
+## [2.4.0] - 2025-10-31
+- Improve error output for script testing
+- get rid of Base.get_extension
+
+## [2.3.1] - 2025-10-22
 
  - use `invokelatest` in `plotmodule` to be in line with strict world age semantics from Julia 1.12 (see [Julia#58511](github.com/JuliaLang/julia/issues/58511))
 
