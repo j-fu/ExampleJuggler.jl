@@ -11,9 +11,11 @@ macro testscript(source, kwargs...)
         :(
             ExampleJuggler.verbose() && @info "Testing " * basename($(source));
             try
-                mod = eval(ExampleJuggler.parsescript($(source)))
-                if Base.invokelatest(isdefined, mod, :runtests)
-                    Base.invokelatest(Base.invokelatest(getproperty, mod, :runtests); $(kwargs...))
+                cd(dirname($source)) do
+                    mod = eval(ExampleJuggler.parsescript($(source)))
+                    if Base.invokelatest(isdefined, mod, :runtests)
+                        Base.invokelatest(Base.invokelatest(getproperty, mod, :runtests); $(kwargs...))
+                    end
                 end
             catch err
                 @error  "Error in $(source): $(err)"

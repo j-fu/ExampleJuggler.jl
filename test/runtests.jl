@@ -1,6 +1,6 @@
 using Test, Aqua
 using ExampleJuggler
-
+import Pluto
 
 if isdefined(Docs, :undocumented_names) # >=1.11
     @testset "undocumented names" begin
@@ -25,14 +25,12 @@ ExampleJuggler.verbose!(true)
 example_dir = joinpath(@__DIR__, "..", "examples")
 
 modules = ["ExampleModule.jl"]
-notebooks = ["PlutoTemplate.jl", "ExamplePluto.jl"]
+notebooks = ["PlutoTemplate.jl", "ExamplePluto.jl", "ExamplePluto2.jl"]
 scripts = ["ExampleScript.jl"]
 
-# This kind of test needs `import Pluto`
-# and has been temporarily disabled due to lacking support on Julia nightly
-# @testset "pluto notebooks" begin
-#    @testplutonotebooks(example_dir, notebooks)
-# end
+@testset "pluto notebooks" begin
+    @testplutonotebooks(example_dir, notebooks)
+end
 
 # This kind of test works without Pluto
 @testset "notebooks as scripts" begin
