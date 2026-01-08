@@ -107,7 +107,7 @@ Generate markdown files and plots  (via the respective `generateplots` methods) 
 
 
 Parameters:
-- `example_dir`: subdirectory where the files coresponding to the modules reside. 
+- `example_dir`: subdirectory where the files corresponding to the modules reside. 
 - `scripts`: Vector of file names or pairs `"title" => "filename"` as in  
    [Documenter.jl](https://documenter.juliadocs.org/stable/man/guide/#Pages-in-the-Sidebar).
 

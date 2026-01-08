@@ -130,7 +130,7 @@ for use with documenter from list of Julia modules.
 Wrapper macro for [`docmodules`](@ref) and [`ExampleJuggler.@plotmodules`](@ref).
 
 Parameters:
-- `example_dir`: subdirectory where the files coresponding to the modules reside. 
+- `example_dir`: subdirectory where the files corresponding to the modules reside. 
 - `modules`: Vector of file names or pairs `"title" => "filename"` as in  
    [Documenter.jl](https://documenter.juliadocs.org/stable/man/guide/#Pages-in-the-Sidebar).
 
