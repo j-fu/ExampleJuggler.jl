@@ -21,4 +21,3 @@ ExampleJuggler.verbose!
 testplutonotebooks
 @testplutonotebooks
 ```
-
