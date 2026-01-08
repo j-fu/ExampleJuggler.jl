@@ -92,4 +92,3 @@ deploydocs(; repo = "github.com/j-fu/ExampleJuggler.jl.git", devbranch = "main")
 end
 ```
 In particular, graphics generation for module and script examples is supported.
-

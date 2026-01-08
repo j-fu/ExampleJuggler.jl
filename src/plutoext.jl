@@ -44,7 +44,7 @@ Keyword arguments:
 - `ntasks`: number of parallel tasks.
 - `source_prefix`: Prefix of notebook source file on github.
 - `iframe_height`: Height of iframe.
-- `force`: force ovewriting of already rendered notebooks.
+- `force`: force overwriting of already rendered notebooks.
 
 
 Returns: Vector of markdown file names (one for each notebook) ready to be passed to `makedocs`.
@@ -109,7 +109,7 @@ end
      @testplutonotebooks(example_dir,notebooks,  kwargs...)
 
 Macro wrapper for [`testplutonotebooks`](@ref).
-Just for aestethic reasons, as other parts of the API have to be macros.
+Just for aesthetic reasons, as other parts of the API have to be macros.
 """
 macro testplutonotebooks(example_dir, notebooks, kwargs...)
     return esc(:(ExampleJuggler.testplutonotebooks($example_dir, $notebooks; $(kwargs...))))
@@ -133,7 +133,7 @@ Keyword arguments:
       html export. For documenter, a markdown page is created which contains statements to show the 
       notebook html in an iframe. The advantage of this method is that active javascript content is shown.
       The disadvantage is weak integration into documenter. Prerequisite is `import PlutoSliderServer` in `docs/make.jl`.
-    - If false, Documenter markdown files are ceated via  [PlutoStaticHTML.jl](https://github.com/rikhuijzer/PlutoStaticHTML.jl). These integrate well with
+    - If false, Documenter markdown files are created via  [PlutoStaticHTML.jl](https://github.com/rikhuijzer/PlutoStaticHTML.jl). These integrate well with
       Documenter, but are (as of now) unable to show active javascript content. Graphics is best prepared
       with CairoMakie. Prerequisite is `import PlutoStaticHTML` in `docs/make.jl`.
 - `distributed`: Use parallel evaluation
@@ -174,7 +174,7 @@ end
     @docplutonotebooks(example_dir, notebooklist, kwargs...)
 
 Macro wrapper for [`docplutonotebooks`](@ref).
-Just for aestethic reasons, as other parts of the API have to be macros.
+Just for aesthetic reasons, as other parts of the API have to be macros.
 """
 macro docplutonotebooks(example_dir, notebooklist, kwargs...)
     return esc(:(docplutonotebooks($example_dir, $notebooklist; $(kwargs...))))

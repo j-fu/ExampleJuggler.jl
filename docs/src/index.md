@@ -4,6 +4,3 @@ ExampleJuggler
 ```@contents
 Depth=5
 ```
-
-
-

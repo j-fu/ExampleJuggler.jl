@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.5.0] - 2026-01-08
+- run script tests in the directory where script is located
+- runic format and other checks
+
 ## [2.4.0] - 2025-10-31
 - Improve error output for script testing
 - get rid of Base.get_extension
@@ -48,4 +52,3 @@ All notable changes to this project will be documented in this file.
 - Use distributed for static html generation from notebooks
 - Add `use_module_titles` flag for @docmodules
 - Set version to 1.0.0 for full SemVer
-

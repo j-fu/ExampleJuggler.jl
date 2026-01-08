@@ -11,9 +11,11 @@ macro testscript(source, kwargs...)
         :(
             ExampleJuggler.verbose() && @info "Testing " * basename($(source));
             try
-                mod = eval(ExampleJuggler.parsescript($(source)))
-                if Base.invokelatest(isdefined, mod, :runtests)
-                    Base.invokelatest(Base.invokelatest(getproperty, mod, :runtests); $(kwargs...))
+                cd(dirname($source)) do
+                    mod = eval(ExampleJuggler.parsescript($(source)))
+                    if Base.invokelatest(isdefined, mod, :runtests)
+                        Base.invokelatest(Base.invokelatest(getproperty, mod, :runtests); $(kwargs...))
+                    end
                 end
             catch err
                 @error  "Error in $(source): $(err)"
@@ -105,7 +107,7 @@ Generate markdown files and plots  (via the respective `generateplots` methods) 
 
 
 Parameters:
-- `example_dir`: subdirectory where the files coresponding to the modules reside. 
+- `example_dir`: subdirectory where the files corresponding to the modules reside. 
 - `scripts`: Vector of file names or pairs `"title" => "filename"` as in  
    [Documenter.jl](https://documenter.juliadocs.org/stable/man/guide/#Pages-in-the-Sidebar).
 
