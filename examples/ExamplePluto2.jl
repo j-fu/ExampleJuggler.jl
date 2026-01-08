@@ -6,7 +6,7 @@ using InteractiveUtils
 
 # ╔═╡ b285aca3-dee5-4b77-9276-537563e8643b
 begin
-	using Pkg
+    using Pkg
     Pkg.activate(joinpath(@__DIR__, ".."))
     # using Revise
     using Test
@@ -28,9 +28,9 @@ y, t, fyt = mock_xt()
 function runtests()
     # hideall
     @test isapprox(maximum(fyt), 1.0; rtol = 1.0e-3)
-	@test splitpath(pwd())[end]=="examples"
+    @test splitpath(pwd())[end] == "examples"
     @test isapprox(maximum(fx), 1.0; rtol = 1.0e-3)
-	return
+    return
 end;
 
 # ╔═╡ e87fd871-04be-4dbc-b933-3daeb11002b9
