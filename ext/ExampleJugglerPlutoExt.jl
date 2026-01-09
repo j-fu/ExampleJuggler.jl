@@ -29,12 +29,14 @@ function testplutonotebook(notebookname::String; pluto_project = Base.active_pro
 
     errored = false
     for c in notebook.cells
-        if occursin("@test", c.code)
-            @test !c.errored
-        end
         if c.errored
             errored = true
-            @error "Error in  $(c.cell_id): $(c.output.body[:msg])\n\n $(c.code)\n"
+            @error """Error in cell $(c.cell_id): $(c.output.body[:msg])
+
+               ----------------------------------------------------      
+               $(c.code)
+               ----------------------------------------------------
+            """
         end
     end
     ENV["PLUTO_PROJECT"] = nothing

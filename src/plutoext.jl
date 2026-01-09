@@ -99,7 +99,7 @@ Keyword arguments:
 """
 function testplutonotebooks(example_dir, notebooks; kwargs...)
     for notebook in notebooks
-        testplutonotebook(joinpath(example_dir, notebook); kwargs...)
+        @test testplutonotebook(joinpath(example_dir, notebook); kwargs...)
     end
     return
 end
