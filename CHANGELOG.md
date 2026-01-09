@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.5.1] - 2026-01-09
+- Catch errors during @testplutonotebooks
+
 ## [2.5.0] - 2026-01-08
 - run script tests in the directory where script is located
 - runic format and other checks
