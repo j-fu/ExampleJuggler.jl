@@ -1,6 +1,8 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [2.6.0] - 2026-07-21
+- Update Pluto compat to include 1
 
 ## [2.5.1] - 2026-01-09
 - Catch errors during @testplutonotebooks
