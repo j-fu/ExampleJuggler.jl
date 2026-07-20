@@ -6,3 +6,6 @@ PkgDependency = "9eb5382b-762c-48ca-8139-e736883fe800"
 PlutoSliderServer = "2fc8631c-6f24-4c5b-bca7-cbb509c42db4"
 PlutoStaticHTML = "359b1769-a58e-495b-9770-312e911026ad"
 Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
+
+[sources]
+ExampleJuggler = {path = ".."}
