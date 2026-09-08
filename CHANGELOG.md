@@ -1,6 +1,10 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## [2.7.0] - 2026-09-09
+- Allow to pass documenter_code_blocks option to @docplutonotebooks
+
 ## [2.6.0] - 2026-07-21
 - Update Pluto compat to include 1
 

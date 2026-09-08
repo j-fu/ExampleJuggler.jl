@@ -138,6 +138,8 @@ Keyword arguments:
       with CairoMakie. Prerequisite is `import PlutoStaticHTML` in `docs/make.jl`.
 - `distributed`: Use parallel evaluation
 - `ntasks` (default: `Threads.nthreads()`: Number of parallel tasks
+- `documenter_code_blocks` (default: `false`) convert contents of code cells to documenter code blocks. This enables the use of DocumenterCodeBlocks
+  for pluto notebooks.
 - `append_build_context`: pass this to [PlutoStaticHTML.OutputOptions](https://plutostatichtml.huijzer.xyz/dev/#PlutoStaticHTML.OutputOptions).
    Possibly needed when running the notebook in external environment.
 - `source_prefix`: Path prefix to the notebooks on github (for generating download links)
@@ -155,6 +157,7 @@ function docplutonotebooks(
         distributed = true,
         ntasks = Threads.nthreads(),
         append_build_context = true,
+        documenter_code_blocks = false,
         pluto_project = Base.active_project()
     )
     startroot!(pwd())
@@ -164,7 +167,7 @@ function docplutonotebooks(
     if iframe
         mdpaths = docplutosliderserver(example_dir, notebooks; pluto_project, source_prefix, iframe_height, ntasks)
     else
-        mdpaths = docplutostatichtml(example_dir, notebooks; append_build_context, distributed, pluto_project, ntasks)
+        mdpaths = docplutostatichtml(example_dir, notebooks; append_build_context, distributed, pluto_project, ntasks, documenter_code_blocks)
     end
     cd(thisdir)
     return Pair.(first.(notebooklist), mdpaths)
