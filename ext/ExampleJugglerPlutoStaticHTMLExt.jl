@@ -12,6 +12,7 @@ function docplutostatichtml(
         append_build_context = true,
         distributed = true,
         force = true,
+        documenter_code_blocks = false,
         pluto_project = Base.active_project(),
         ntasks = Threads.nthreads()
     )
@@ -23,7 +24,7 @@ function docplutostatichtml(
 
     notebookmd = [splitext(notebook)[1] * ".md" for notebook in notebooks]
 
-    oopts = OutputOptions(; append_build_context)
+    oopts = OutputOptions(; append_build_context, documenter_code_blocks)
     bopts = BuildOptions(
         example_dir;
         output_format = documenter_output,
