@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.7.1] - 2026-10-11
+- `invokelatest` for plot generation from scripts
+
 ## [2.7.0] - 2026-09-09
 - Allow to pass documenter_code_blocks option to @docplutonotebooks
 
@@ -20,7 +23,6 @@ All notable changes to this project will be documented in this file.
 - get rid of Base.get_extension
 
 ## [2.3.1] - 2025-10-22
-
  - use `invokelatest` in `plotmodule` to be in line with strict world age semantics from Julia 1.12 (see [Julia#58511](github.com/JuliaLang/julia/issues/58511))
 
 ## [2.3.0] - 2025-07-04
