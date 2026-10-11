@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [2.7.1] - 2026-10-11
 - `invokelatest` for plot generation from scripts
+- Julia >=1.10
 
 ## [2.7.0] - 2026-09-09
 - Allow to pass documenter_code_blocks option to @docplutonotebooks
